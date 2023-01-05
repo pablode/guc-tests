@@ -1,0 +1,35 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/NoHdStormCompat_DamagedHelmet/DamagedHelmet.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "secludedBeach"
+    }
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    float3 xformOp:rotateXYZ:a = (-90, -0, 0)
+    float3 xformOp:rotateXYZ:b = (89.027954, -3.7285235, 61.826054)
+    double3 xformOp:translate = (3.1432528495788574, -1.5689518451690674, 0)
+    uniform token[] xformOpOrder = ["xformOp:rotateXYZ:a", "xformOp:translate", "xformOp:rotateXYZ:b"]
+    float2 clippingRange = (1, 3.5)
+    float focalLength = 34
+    float horizontalAperture = 24
+    float verticalAperture = 24
+    token projection = "perspective"
+}
+

@@ -1,0 +1,17 @@
+#usda 1.0
+(
+    defaultPrim = "Camera"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Camera "Camera"
+{
+    float2 clippingRange = (0.1, 50)
+    float horizontalAperture = 42.5
+    float verticalAperture = 42.5
+    float3 xformOp:rotateXYZ = (-45, -180, 0)
+    double3 xformOp:translate = (0.0, 20, -20)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+}
+

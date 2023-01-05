@@ -1,0 +1,31 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/OrientationTest/OrientationTest.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    float3 xformOp:rotateXYZ = (-36, 45, 0)
+    double3 xformOp:translate = (20, 20, 20)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+    float2 clippingRange = (5, 50)
+    float focalLength = 48
+    float horizontalAperture = 24
+    token projection = "perspective"
+    float verticalAperture = 24
+}
+

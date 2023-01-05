@@ -1,0 +1,34 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/IridescentDishWithOlives/IridescentDishWithOlives.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "secludedBeach"
+    }
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    quatf xformOp:orient = (0.688, -0.162, 0.688, 0.162)
+    float3 xformOp:translate = (0.8, 0.5, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient"]
+    float2 clippingRange = (0.3, 1.5)
+    float focalLength = 44.96875
+    float horizontalAperture = 20.955
+    token projection = "perspective"
+    float verticalAperture = 20.955
+}
+

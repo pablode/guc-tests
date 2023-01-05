@@ -1,0 +1,33 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/LightsPunctualLamp/LightsPunctualLamp.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "secludedBeach"
+    }
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    double3 xformOp:translate = (0.2, 0.9125, 5)
+    uniform token[] xformOpOrder = ["xformOp:translate"]
+    float2 clippingRange = (2, 10)
+    float focalLength = 59
+    float horizontalAperture = 20
+    token projection = "perspective"
+    float verticalAperture = 24
+}
+

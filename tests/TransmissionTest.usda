@@ -1,0 +1,33 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/TransmissionTest/TransmissionTest.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    float3 xformOp:rotateXYZ = (-90, -0, 0)
+    matrix4d xformOp:transform = ( (0.9992432594299316, 0.038895536214113235, 8.992589783929361e-8, 0), (-0.005460559856146574, 0.14028166234493256, 0.990096926689148, 0), (0.03851031884551048, -0.989347517490387, 0.1403878629207611, 0), (-0.07675539702177048, -1.802846074104309, 0.3394200801849365, 1) )
+    uniform token[] xformOpOrder = ["xformOp:rotateXYZ", "xformOp:transform"]
+    float2 clippingRange = (0.5, 3)
+    float focalLength = 38.62742
+    float horizontalAperture = 42.666668
+    float horizontalApertureOffset = 0
+    token projection = "perspective"
+    float verticalAperture = 24
+    float verticalApertureOffset = 0
+}
+

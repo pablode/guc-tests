@@ -1,0 +1,32 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/DragonAttenuation/DragonAttenuation.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "secludedBeach"
+    }
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    double3 xformOp:translate = (-0.08, 0.4, 5)
+    uniform token[] xformOpOrder = ["xformOp:translate"]
+    float2 clippingRange = (3, 10)
+    float focalLength = 45
+    float horizontalAperture = 35
+    float verticalAperture = 24
+    token projection = "perspective"
+}

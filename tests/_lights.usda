@@ -1,0 +1,35 @@
+#usda 1.0
+(
+    defaultPrim = "Lights"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Lights" (
+    variants = {
+        string domeLightVariant = "none"
+    }
+    prepend variantSets = "domeLightVariant"
+)
+{
+    variantSet "domeLightVariant" = {
+        "none" {
+            # Use default lighting.
+        }
+        "glTFAssetGenerator" {
+            def DomeLight "DomeLight"
+            {
+                asset inputs:texture:file = @./_glTFAssetGenSkybox.png@
+                float3 xformOp:rotateXYZ = (0, 90, 0)
+                uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+            }
+        }
+        "secludedBeach" {
+            def DomeLight "DomeLight"
+            {
+                asset inputs:texture:file = @./_secludedBeach.hdr@
+            }
+        }
+    }
+}
+

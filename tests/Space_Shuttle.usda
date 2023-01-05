@@ -1,0 +1,31 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/Space_Shuttle/Space_Shuttle.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    float3 xformOp:rotateXYZ = (0, 90, 0)
+    double3 xformOp:translate = (0, -1, 30)
+    uniform token[] xformOpOrder = ["xformOp:rotateXYZ", "xformOp:translate"]
+    float2 clippingRange = (10, 50)
+    float focalLength = 38
+    float horizontalAperture = 58
+    token projection = "perspective"
+    float verticalAperture = 32
+}
+

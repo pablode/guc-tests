@@ -1,0 +1,28 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/Texture_Sampler_05/Texture_Sampler_05.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "glTFAssetGenerator"
+    }
+)
+{
+}
+
+def Camera "T_Camera" (
+    prepend references = @./_camTextureSampler.usda@
+)
+{
+}
+

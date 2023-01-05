@@ -1,0 +1,403 @@
+<?xml version="1.0"?>
+<materialx version="1.38">
+
+  <!-- Unfortunately, we can't reuse NodeGraphs because of this issue:
+       https://github.com/PixarAnimationStudios/USD/issues/2078 -->
+
+  <!-- Default -->
+  <oren_nayar_diffuse_bsdf name="N_default" type="BSDF">
+    <input name="color" type="color3" vector3="0.5, 0.5, 0.5" />
+  </oren_nayar_diffuse_bsdf>
+  <surface name="S_default" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodename="N_default" />
+  </surface>
+  <surfacematerial name="M_default" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="S_default" />
+  </surfacematerial>
+
+  <!-- Label -->
+  <image name="N_label_image" type="color3">
+    <input name="file" type="filename" value="_geomvisLabels.png" />
+    <input name="default" type="color3" value="1, 1, 1" />
+  </image>
+  <oren_nayar_diffuse_bsdf name="N_label" type="BSDF">
+      <input name="color" type="color3" nodename="N_label_image" />
+  </oren_nayar_diffuse_bsdf>
+  <surface name="S_label" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodename="N_label" />
+  </surface>
+  <surfacematerial name="M_label" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="S_label" />
+  </surfacematerial>
+
+  <!-- Position, node -->
+  <nodegraph name="NG_position_node">
+    <position name="N_position" type="vector3">
+      <input name="space" type="string" value="world" />
+    </position>
+    <convert name="N_node_conv" type="color3">
+      <input name="in" type="vector3" nodename="N_position" />
+    </convert>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_node_conv" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_position_node_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_position_node" output="out" />
+  </surface>
+  <surfacematerial name="M_position_node" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_position_node_surface" />
+  </surfacematerial>
+
+  <!-- Position, geomprop -->
+  <nodegraph name="NG_position_geomprop">
+    <geompropvalue name="N_position" type="vector3">
+      <input name="geomprop" type="string" value="positions" />
+      <input name="default" type="vector3" value="1, 1, 1" />
+    </geompropvalue>
+    <convert name="N_node_conv" type="color3">
+      <input name="in" type="vector3" nodename="N_position" />
+    </convert>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_node_conv" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_position_geomprop_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_position_geomprop" output="out" />
+  </surface>
+  <surfacematerial name="M_position_geomprop" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_position_geomprop_surface" />
+  </surfacematerial>
+
+  <!-- Normal, node -->
+  <nodegraph name="NG_normal_node">
+    <normal name="N_normal" type="vector3">
+      <input name="space" type="string" value="world" />
+    </normal>
+    <add name="N_node_add" type="vector3">
+      <input name="in1" type="vector3" nodename="N_normal" />
+      <input name="in2" type="float" value="1" />
+    </add>
+    <divide name="N_node_div" type="vector3">
+      <input name="in1" type="vector3" nodename="N_node_add" />
+      <input name="in2" type="float" value="2" />
+    </divide>
+    <convert name="N_node_conv" type="color3">
+      <input name="in" type="vector3" nodename="N_node_div" />
+    </convert>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_node_conv" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_normal_node_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_normal_node" output="out" />
+  </surface>
+  <surfacematerial name="M_normal_node" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_normal_node_surface" />
+  </surfacematerial>
+
+  <!-- Normal, geomprop -->
+  <nodegraph name="NG_normal_geomprop">
+    <geompropvalue name="N_normal" type="vector3">
+      <input name="geomprop" type="string" value="normals" />
+      <input name="default" type="vector3" value="1, 1, 1" />
+    </geompropvalue>
+    <transformnormal name="N_trans" type="vector3">
+      <input name="in" type="vector3" nodename="N_normal" />
+      <input name="fromspace" type="string" value="object" />
+      <input name="tospace" type="string" value="world" />
+    </transformnormal>
+    <add name="N_node_add" type="vector3">
+      <input name="in1" type="vector3" nodename="N_trans" />
+      <input name="in2" type="float" value="1" />
+    </add>
+    <divide name="N_node_div" type="vector3">
+      <input name="in1" type="vector3" nodename="N_node_add" />
+      <input name="in2" type="float" value="2" />
+    </divide>
+    <convert name="N_node_conv" type="color3">
+      <input name="in" type="vector3" nodename="N_node_div" />
+    </convert>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_node_conv" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_normal_geomprop_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_normal_geomprop" output="out" />
+  </surface>
+  <surfacematerial name="M_normal_geomprop" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_normal_geomprop_surface" />
+  </surfacematerial>
+
+  <!-- Tangent, node -->
+  <nodegraph name="NG_tangent_node">
+    <tangent name="N_tangent" type="vector3">
+      <input name="space" type="string" value="world" />
+    </tangent>
+    <add name="N_node_add" type="vector3">
+      <input name="in1" type="vector3" nodename="N_tangent" />
+      <input name="in2" type="float" value="1" />
+    </add>
+    <divide name="N_node_div" type="vector3">
+      <input name="in1" type="vector3" nodename="N_node_add" />
+      <input name="in2" type="float" value="2" />
+    </divide>
+    <convert name="N_node_conv" type="color3">
+      <input name="in" type="vector3" nodename="N_node_div" />
+    </convert>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_node_conv" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_tangent_node_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_tangent_node" output="out" />
+  </surface>
+  <surfacematerial name="M_tangent_node" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_tangent_node_surface" />
+  </surfacematerial>
+
+  <!-- Tangent, geomprop -->
+  <nodegraph name="NG_tangent_geomprop">
+    <geompropvalue name="N_tangent" type="vector3">
+      <input name="geomprop" type="string" value="tangents" />
+      <input name="default" type="vector3" value="1, 1, 1" />
+    </geompropvalue>
+    <transformvector name="N_trans" type="vector3">
+      <input name="in" type="vector3" nodename="N_tangent" />
+      <input name="fromspace" type="string" value="object" />
+      <input name="tospace" type="string" value="world" />
+    </transformvector>
+    <add name="N_node_add" type="vector3">
+      <input name="in1" type="vector3" nodename="N_trans" />
+      <input name="in2" type="float" value="1" />
+    </add>
+    <divide name="N_node_div" type="vector3">
+      <input name="in1" type="vector3" nodename="N_node_add" />
+      <input name="in2" type="float" value="2" />
+    </divide>
+    <convert name="N_node_conv" type="color3">
+      <input name="in" type="vector3" nodename="N_node_div" />
+    </convert>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_node_conv" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_tangent_geomprop_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_tangent_geomprop" output="out" />
+  </surface>
+  <surfacematerial name="M_tangent_geomprop" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_tangent_geomprop_surface" />
+  </surfacematerial>
+
+  <!-- Biangent, node -->
+  <nodegraph name="NG_bitangent_node">
+    <bitangent name="N_bitangent" type="vector3">
+      <input name="space" type="string" value="world" />
+    </bitangent>
+    <add name="N_node_add" type="vector3">
+      <input name="in1" type="vector3" nodename="N_bitangent" />
+      <input name="in2" type="float" value="1" />
+    </add>
+    <divide name="N_node_div" type="vector3">
+      <input name="in1" type="vector3" nodename="N_node_add" />
+      <input name="in2" type="float" value="2" />
+    </divide>
+    <convert name="N_node_conv" type="color3">
+      <input name="in" type="vector3" nodename="N_node_div" />
+    </convert>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_node_conv" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_bitangent_node_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_bitangent_node" output="out" />
+  </surface>
+  <surfacematerial name="M_bitangent_node" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_bitangent_node_surface" />
+  </surfacematerial>
+
+  <!-- Biangent, geomprop -->
+  <nodegraph name="NG_bitangent_geomprop">
+    <geompropvalue name="N_normal" type="vector3">
+      <input name="geomprop" type="string" value="normals" />
+      <input name="default" type="vector3" value="1, 1, 1" />
+    </geompropvalue>
+    <geompropvalue name="N_tangent" type="vector3">
+      <input name="geomprop" type="string" value="tangents" />
+      <input name="default" type="vector3" value="1, 1, 1" />
+    </geompropvalue>
+    <crossproduct name="N_cross" type="vector3">
+      <input name="in1" type="vector3" nodename="N_normal" />
+      <input name="in2" type="vector3" nodename="N_tangent" />
+    </crossproduct>
+    <geompropvalue name="N_bitangentSign" type="float">
+      <input name="geomprop" type="string" value="tangentSigns" />
+      <input name="default" type="float" value="1" />
+    </geompropvalue>
+    <multiply name="N_bitangent" type="vector3">
+      <input name="in1" type="vector3" nodename="N_cross" />
+      <input name="in2" type="float" nodename="N_bitangentSign" />
+    </multiply>
+    <transformvector name="N_trans" type="vector3">
+      <input name="in" type="vector3" nodename="N_bitangent" />
+      <input name="fromspace" type="string" value="object" />
+      <input name="tospace" type="string" value="world" />
+    </transformvector>
+    <add name="N_node_add" type="vector3">
+      <input name="in1" type="vector3" nodename="N_trans" />
+      <input name="in2" type="float" value="1" />
+    </add>
+    <divide name="N_node_div" type="vector3">
+      <input name="in1" type="vector3" nodename="N_node_add" />
+      <input name="in2" type="float" value="2" />
+    </divide>
+    <convert name="N_node_conv" type="color3">
+      <input name="in" type="vector3" nodename="N_node_div" />
+    </convert>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_node_conv" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_bitangent_geomprop_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_bitangent_geomprop" output="out" />
+  </surface>
+  <surfacematerial name="M_bitangent_geomprop" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_bitangent_geomprop_surface" />
+  </surfacematerial>
+
+  <!-- TexCoord0, node -->
+  <nodegraph name="NG_texcoord0_node">
+    <texcoord name="N_texcoord0" type="vector2">
+      <input name="index" type="integer" value="0" />
+    </texcoord>
+    <convert name="N_node_conv1" type="vector3">
+      <input name="in" type="vector2" nodename="N_texcoord0" />
+    </convert>
+    <convert name="N_node_conv2" type="color3">
+      <input name="in" type="vector3" nodename="N_node_conv1" />
+    </convert>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_node_conv2" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_texcoord0_node_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_texcoord0_node" output="out" />
+  </surface>
+  <surfacematerial name="M_texcoord0_node" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_texcoord0_node_surface" />
+  </surfacematerial>
+
+  <!-- TexCoord0, geomprop -->
+  <nodegraph name="NG_texcoord0_geomprop">
+    <geompropvalue name="N_texcoord0" type="vector2">
+      <input name="geomprop" type="string" value="st0" />
+      <input name="default" type="vector2" value="1, 1" />
+    </geompropvalue>
+    <convert name="N_node_conv1" type="vector3">
+      <input name="in" type="vector2" nodename="N_texcoord0" />
+    </convert>
+    <convert name="N_node_conv2" type="color3">
+      <input name="in" type="vector3" nodename="N_node_conv1" />
+    </convert>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_node_conv2" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_texcoord0_geomprop_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_texcoord0_geomprop" output="out" />
+  </surface>
+  <surfacematerial name="M_texcoord0_geomprop" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_texcoord0_geomprop_surface" />
+  </surfacematerial>
+
+  <!-- TexCoord1, node -->
+  <nodegraph name="NG_texcoord1_node">
+    <texcoord name="N_texcoord1" type="vector2">
+      <input name="index" type="integer" value="0" />
+    </texcoord>
+    <convert name="N_node_conv1" type="vector3">
+      <input name="in" type="vector2" nodename="N_texcoord1" />
+    </convert>
+    <convert name="N_node_conv2" type="color3">
+      <input name="in" type="vector3" nodename="N_node_conv1" />
+    </convert>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_node_conv2" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_texcoord1_node_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_texcoord1_node" output="out" />
+  </surface>
+  <surfacematerial name="M_texcoord1_node" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_texcoord1_node_surface" />
+  </surfacematerial>
+
+  <!-- TexCoord1, geomprop -->
+  <nodegraph name="NG_texcoord1_geomprop">
+    <geompropvalue name="N_texcoord1" type="vector2">
+      <input name="geomprop" type="string" value="st1" />
+      <input name="default" type="vector2" value="1, 1" />
+    </geompropvalue>
+    <convert name="N_node_conv1" type="vector3">
+      <input name="in" type="vector2" nodename="N_texcoord1" />
+    </convert>
+    <convert name="N_node_conv2" type="color3">
+      <input name="in" type="vector3" nodename="N_node_conv1" />
+    </convert>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_node_conv2" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_texcoord1_geomprop_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_texcoord1_geomprop" output="out" />
+  </surface>
+  <surfacematerial name="M_texcoord1_geomprop" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_texcoord1_geomprop_surface" />
+  </surfacematerial>
+
+  <!-- GeomColor, node -->
+  <nodegraph name="NG_geomcolor_node">
+    <geomcolor name="N_geomcolor" type="color3" />
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_geomcolor" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_geomcolor_node_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_geomcolor_node" output="out" />
+  </surface>
+  <surfacematerial name="M_geomcolor_node" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_geomcolor_node_surface" />
+  </surfacematerial>
+
+  <!-- GeomColor, geomprop -->
+  <nodegraph name="NG_geomcolor_geomprop">
+    <geompropvalue name="N_geomcolor" type="color3">
+      <input name="geomprop" type="string" value="color0" />
+      <input name="default" type="color3" value="1, 1, 1" />
+    </geompropvalue>
+    <oren_nayar_diffuse_bsdf name="N_bsdf" type="BSDF">
+      <input name="color" type="color3" nodename="N_geomcolor" />
+    </oren_nayar_diffuse_bsdf>
+    <output name="out" type="BSDF" nodename="N_bsdf" />
+  </nodegraph>
+  <surface name="N_geomcolor_geomprop_surface" type="surfaceshader">
+    <input name="bsdf" type="BSDF" nodegraph="NG_geomcolor_geomprop" output="out" />
+  </surface>
+  <surfacematerial name="M_geomcolor_geomprop" type="material">
+    <input name="surfaceshader" type="surfaceshader" nodename="N_geomcolor_geomprop_surface" />
+  </surfacematerial>
+
+</materialx>

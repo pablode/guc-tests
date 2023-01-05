@@ -1,0 +1,28 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./input/glTF-Asset-Generator/Output/Positive/Material_MetallicRoughness/Material_MetallicRoughness_10.gltf@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "glTFAssetGenerator"
+    }
+)
+{
+}
+
+def Camera "T_Camera" (
+    prepend references = @./_camMaterial.usda@
+)
+{
+}
+

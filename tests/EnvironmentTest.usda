@@ -1,0 +1,34 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/EnvironmentTest/EnvironmentTest.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "secludedBeach"
+    }
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    float3 xformOp:rotateXYZ = (0, -0.55, 0)
+    double3 xformOp:translate = (-0.9, 3.9, 27.75)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+    float2 clippingRange = (10, 40)
+    float focalLength = 44.29637
+    float horizontalAperture = 36
+    token projection = "perspective"
+    float verticalAperture = 12
+}
+

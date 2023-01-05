@@ -1,0 +1,28 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/Node_Attribute_06/Node_Attribute_06.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "glTFAssetGenerator"
+    }
+)
+{
+}
+
+def Camera "T_Camera" (
+    prepend references = @./_camNode.usda@
+)
+{
+}
+

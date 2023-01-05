@@ -1,0 +1,37 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/NoHdStormCompat_ABeautifulGame/ABeautifulGame.usd@
+)
+{
+    float3 xformOp:scale = (10, 10, 10)
+    uniform token[] xformOpOrder = ["xformOp:scale"]
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "secludedBeach"
+    }
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    float2 clippingRange = (5, 20)
+    float focalLength = 57
+    float horizontalAperture = 36
+    token projection = "perspective"
+    float verticalAperture = 24
+    float3 xformOp:rotateXYZ:a = (-90, -0, 0)
+    float3 xformOp:rotateXYZ:b = (63.941265, 0.008448888, 46.70908)
+    double3 xformOp:translate = (7.358891487121582, -6.925790786743164, 4.958309173583984)
+    uniform token[] xformOpOrder = ["xformOp:rotateXYZ:a", "xformOp:translate", "xformOp:rotateXYZ:b"]
+}
+

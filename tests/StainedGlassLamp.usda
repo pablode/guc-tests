@@ -1,0 +1,35 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/StainedGlassLamp/StainedGlassLamp.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "secludedBeach"
+    }
+)
+{
+    float3 xformOp:rotateXYZ = (0, -160, 0)
+    uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+}
+
+def Camera "T_Camera"
+{
+    double3 xformOp:translate = (0, 0.33875, 2)
+    uniform token[] xformOpOrder = ["xformOp:translate"]
+    float2 clippingRange = (1, 5)
+    float focalLength = 58
+    float horizontalAperture = 22
+    token projection = "perspective"
+    float verticalAperture = 22
+}
+

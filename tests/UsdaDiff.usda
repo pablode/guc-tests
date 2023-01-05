@@ -1,0 +1,151 @@
+#usda 1.0
+(
+    defaultPrim = "Asset"
+    doc = "Converted from glTF with guc 0.2"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Asset" (
+    customData = {
+        string generator = "glTF Asset Generator"
+        string version = "2.0"
+    }
+    kind = "component"
+)
+{
+    def Scope "Materials"
+    {
+        def "UsdPreviewSurface"
+        {
+            def "Materials"
+            {
+                def Material "mat"
+                {
+                    token outputs:surface.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node.outputs:surface>
+
+                    def Shader "node"
+                    {
+                        uniform token info:id = "UsdPreviewSurface"
+                        float3 inputs:diffuseColor.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node1.outputs:rgb>
+                        float3 inputs:emissiveColor = (0, 0, 0)
+                        float inputs:metallic.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node3.outputs:b>
+                        float3 inputs:normal
+                        float inputs:occlusion
+                        float inputs:opacity
+                        float inputs:roughness.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node5.outputs:g>
+                        token outputs:surface
+                    }
+
+                    def Shader "node1"
+                    {
+                        uniform token info:id = "UsdUVTexture"
+                        float4 inputs:fallback = (1, 1, 1, 1)
+                        asset inputs:file = @BaseColor_Plane.png@
+                        float4 inputs:scale = (0.2, 0.2, 0.2, 0.8)
+                        token inputs:sourceColorSpace = "sRGB"
+                        float2 inputs:st.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node2.outputs:result>
+                        token inputs:wrapS = "repeat"
+                        token inputs:wrapT = "repeat"
+                        float3 outputs:rgb
+                    }
+
+                    def Shader "node2"
+                    {
+                        uniform token info:id = "UsdPrimvarReader_float2"
+                        string inputs:varname = "st0"
+                        float2 outputs:result
+                    }
+
+                    def Shader "node3"
+                    {
+                        uniform token info:id = "UsdUVTexture"
+                        float4 inputs:fallback = (1, 1, 1, 1)
+                        asset inputs:file = @MetallicRoughness_Plane.png@
+                        float4 inputs:scale = (0, 0, 0, 0)
+                        token inputs:sourceColorSpace = "raw"
+                        float2 inputs:st.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node4.outputs:result>
+                        token inputs:wrapS = "repeat"
+                        token inputs:wrapT = "repeat"
+                        float outputs:b
+                    }
+
+                    def Shader "node4"
+                    {
+                        uniform token info:id = "UsdPrimvarReader_float2"
+                        string inputs:varname = "st0"
+                        float2 outputs:result
+                    }
+
+                    def Shader "node5"
+                    {
+                        uniform token info:id = "UsdUVTexture"
+                        float4 inputs:fallback = (1, 1, 1, 1)
+                        asset inputs:file = @MetallicRoughness_Plane.png@
+                        float4 inputs:scale = (0, 0, 0, 0)
+                        token inputs:sourceColorSpace = "raw"
+                        float2 inputs:st.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node6.outputs:result>
+                        token inputs:wrapS = "repeat"
+                        token inputs:wrapT = "repeat"
+                        float outputs:g
+                    }
+
+                    def Shader "node6"
+                    {
+                        uniform token info:id = "UsdPrimvarReader_float2"
+                        string inputs:varname = "st0"
+                        float2 outputs:result
+                    }
+                }
+            }
+        }
+    }
+
+    def Xform "Scenes"
+    {
+        def Xform "scene"
+        {
+            def Xform "node"
+            {
+                def Xform "mesh"
+                {
+                    def Mesh "submesh" (
+                        prepend apiSchemas = ["MaterialBindingAPI"]
+                    )
+                    {
+                        float3[] extent = [(-0.5, -0.5, 0), (0.5, 0.5, 0)]
+                        int[] faceVertexCounts = [3, 3]
+                        int[] faceVertexIndices = [0, 1, 2, 3, 4, 5] (
+                            customData = {
+                                dictionary guc = {
+                                    bool generated = 1
+                                }
+                            }
+                        )
+                        rel material:binding:preview = </Asset/Materials/UsdPreviewSurface/Materials/mat>
+                        normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1)] (
+                            customData = {
+                                dictionary guc = {
+                                    bool generated = 1
+                                }
+                            }
+                            interpolation = "vertex"
+                        )
+                        point3f[] points = [(-0.5, -0.5, 0), (0.5, -0.5, 0), (0.5, 0.5, 0), (-0.5, -0.5, 0), (0.5, 0.5, 0), (-0.5, 0.5, 0)]
+                        float3[] primvars:color0 = [(1, 0, 0), (0, 0, 1), (1, 0, 0), (1, 0, 0), (1, 0, 0), (0, 0, 1)] (
+                            interpolation = "vertex"
+                        )
+                        color3f[] primvars:displayColor = [(0.2, 0, 0), (0, 0, 0.2), (0.2, 0, 0), (0.2, 0, 0), (0.2, 0, 0), (0, 0, 0.2)] (
+                            interpolation = "vertex"
+                        )
+                        texCoord2f[] primvars:st0 = [(0, 0), (1, 0), (1, 1), (0, 0), (1, 1), (0, 1)] (
+                            interpolation = "vertex"
+                        )
+                        uniform token subdivisionScheme = "none"
+                    }
+                }
+            }
+        }
+    }
+}
+
