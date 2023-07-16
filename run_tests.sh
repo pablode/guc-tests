@@ -99,7 +99,18 @@ convert_glTF_to_USD()
 {
     if [ ${GT_DISABLE_CONVERSION:-0} -eq 0 ]; then
         guc $1 $2 ${@:3}
+
+        if [ $? -ne 0 ]; then
+            return 1
+        fi
+
+        if [ ${GT_DISABLE_USDCHECKER:-0} -eq 0 ]; then
+            usdchecker $2
+            return $?
+        fi
     fi
+
+    return 0
 }
 
 # $1: glTF input file path
