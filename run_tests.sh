@@ -513,8 +513,7 @@ GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "GearboxAssy"                    GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 # Disabled: KHR_materials_variants not supported
 #test_sampleModel "GlamVelvetSofa"                GT_SAMPLE_MODEL_FLAG_BINARY
-# Disabled: KHR_materials_iridescence not supported
-#test_sampleModel "IridescenceLamp"               GT_SAMPLE_MODEL_FLAG_BINARY
+test_sampleModel "IridescenceLamp"                GT_SAMPLE_MODEL_FLAG_BINARY
 # Note: does not actually use KHR_materials_iridescence extension (yet)
 test_sampleModel "IridescentDishWithOlives"       GT_SAMPLE_MODEL_FLAG_BINARY
 GT_DISABLE_GRAPHICAL=1 \
@@ -576,10 +575,10 @@ test_sampleModel "EmissiveStrengthTest"           GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "EnvironmentTest"                0
 # Disabled: animations not supported
 #test_sampleModel "InterpolationTest"             GT_SAMPLE_MODEL_FLAG_BINARY
-# Disabled: KHR_materials_iridescence not supported
-#test_sampleModel "IridescenceDielectricSpheres"  0
-#test_sampleModel "IridescenceMetallicSpheres"    0
-#test_sampleModel "IridescenceSuzanne"            GT_SAMPLE_MODEL_FLAG_BINARY
+test_sampleModel "IridescenceDielectricSpheres"   0
+test_sampleModel "IridescenceMetallicSpheres"     0
+GT_DISABLE_GRAPHICAL_PREVIEW=1 \
+test_sampleModel "IridescenceSuzanne"             GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "LightsPunctualLamp"             GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "MetalRoughSpheres"              GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 test_sampleModel "MetalRoughSpheresNoTextures"    GT_SAMPLE_MODEL_FLAG_BINARY

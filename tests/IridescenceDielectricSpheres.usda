@@ -1,0 +1,36 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/IridescenceDielectricSpheres/IridescenceDielectricSpheres.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "glTFAssetGenerator"
+    }
+)
+{
+    float3 xformOp:rotateXYZ = (0, 150, 0)
+    uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+}
+
+def Camera "T_Camera"
+{
+    matrix4d xformOp:transform = ( (0.8480480961564261, 2.7755575615628914e-17, 0.5299192642332049, -0), (0.1703369649489662, 0.9469301294951056, -0.27259612657988574, 0), (-0.5017965175022998, 0.3214394653031616, 0.8030422935114823, 0), (-29.848540012348746, 17.9, 48.5987990965817, 1) )
+    float3 xformOp:rotateXYZ = (0, 0.5, 0)
+    uniform token[] xformOpOrder = ["xformOp:transform", "xformOp:rotateXYZ"]
+    float2 clippingRange = (20, 82)
+    float focalLength = 60
+    float horizontalAperture = 37
+    token projection = "perspective"
+    float verticalAperture = 36
+}
+

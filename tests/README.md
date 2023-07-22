@@ -846,6 +846,11 @@ Complex Models
     <td><img src="DamagedHelmet_mtlx.png" align="middle" width=350 /></td>
   </tr>
   <tr>
+    <td>IridescenceLamp</td>
+    <td><img src="IridescenceLamp_preview.png" align="middle" width=350 /></td>
+    <td><img src="IridescenceLamp_mtlx.png" align="middle" width=350 /></td>
+  </tr>
+  <tr>
     <td>IridescentDishWithOlives</td>
     <td><img src="IridescentDishWithOlives_preview.png" align="middle" width=350 /></td>
     <td><img src="IridescentDishWithOlives_mtlx.png" align="middle" width=350 /></td>
@@ -899,6 +904,16 @@ Feature Tests
     <td>EnvironmentTest</td>
     <td><img src="EnvironmentTest_preview.png" align="middle" width=350 /></td>
     <td><img src="EnvironmentTest_mtlx.png" align="middle" width=350 /></td>
+  </tr>
+  <tr>
+    <td>IridescenceDielectricSpheres</td>
+    <td><img src="IridescenceDielectricSpheres_preview.png" align="middle" width=350 /></td>
+    <td><img src="IridescenceDielectricSpheres_mtlx.png" align="middle" width=350 /></td>
+  </tr>
+  <tr>
+    <td>IridescenceMetallicSpheres</td>
+    <td><img src="IridescenceMetallicSpheres_preview.png" align="middle" width=350 /></td>
+    <td><img src="IridescenceMetallicSpheres_mtlx.png" align="middle" width=350 /></td>
   </tr>
   <tr>
     <td>LightsPunctualLamp</td>
