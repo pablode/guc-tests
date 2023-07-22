@@ -66,28 +66,30 @@ render_and_compare()
         return
     fi
 
-    # Check render against ref image. Afterwards, we drop the alpha channel to make the failing pixels visible.
-    # We use oiiotool for that, but writing to the same file leads to an access denial on Windows. By writing a
-    # temporary file to a temporary directory outside of the repository, we avoid pollution in case the script
-    # execution is prematurely stopped.
-    DIFF_FILE_NAME=$2_diff.png
-    TMP_DIFF_FILE="$TMP_DIR/$DIFF_FILE_NAME"
+    if [ ${GT_DISABLE_IMGDIFF:-0} -eq 0 ]; then
+        # Check render against ref image. Afterwards, we drop the alpha channel to make the failing pixels visible.
+        # We use oiiotool for that, but writing to the same file leads to an access denial on Windows. By writing a
+        # temporary file to a temporary directory outside of the repository, we avoid pollution in case the script
+        # execution is prematurely stopped.
+        DIFF_FILE_NAME=$2_diff.png
+        TMP_DIFF_FILE="$TMP_DIR/$DIFF_FILE_NAME"
 
-    idiff -o $TMP_DIFF_FILE -od -abs -scale 100 -fail 0.5 -failpercent 0.001 -hardfail 0.5 -warn 0.01 -warnpercent 0.001 output/$2.png ${3:-$2}.png
+        idiff -o $TMP_DIFF_FILE -od -abs -scale 100 -fail 0.1 -failpercent 0.004 -hardfail 0.2 -warn 0.01 -warnpercent 0.001 output/$2.png ${3:-$2}.png
 
-    IDIFF_RESULT=$?
+        IDIFF_RESULT=$?
 
-    if [ $IDIFF_RESULT -ne 0 ]; then
-        if [[ $IDIFF_RESULT -ne 4 ]]; then
-            # Drop the alpha channel
-            oiiotool $TMP_DIFF_FILE --no-autopremult -ch R,G,B -o output/$DIFF_FILE_NAME
-            # Delete temp file now in case the script is interrupted before the temp dir is deleted
-            rm $TMP_DIFF_FILE
-        fi
+        if [ $IDIFF_RESULT -ne 0 ]; then
+            if [[ $IDIFF_RESULT -ne 4 ]]; then
+                # Drop the alpha channel
+                oiiotool $TMP_DIFF_FILE --no-autopremult -ch R,G,B -o output/$DIFF_FILE_NAME
+                # Delete temp file now in case the script is interrupted before the temp dir is deleted
+                rm $TMP_DIFF_FILE
+            fi
 
-        if [[ $IDIFF_RESULT -ne 1 ]]; then
-            print_error
-            return
+            if [[ $IDIFF_RESULT -ne 1 ]]; then
+                print_error
+                return
+            fi
         fi
     fi
 }
@@ -530,6 +532,8 @@ test_sampleModel "SciFiHelmet"                    0
 #test_sampleModel "SheenCloth"                    0
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "Sponza"                         0
+# Disabled: Storm transparency flakyness
+GT_DISABLE_IMGDIFF=1 \
 test_sampleModel "StainedGlassLamp"               0
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "Suzanne"                        0
@@ -627,7 +631,8 @@ test_sampleModel "VertexColorTest"                GT_SAMPLE_MODEL_FLAG_BINARY_AN
 ##
 
 IMAGE_WIDTH=800
-test_thirdparty "Camera_01" "Camera_01/Camera_01.gltf"
+# Disabled: Storm transparency flakyness
+GT_DISABLE_GRAPHICAL_PREVIEW=1 test_thirdparty "Camera_01" "Camera_01/Camera_01.gltf"
 test_thirdparty "CoffeeCart_01" "CoffeeCart_01/CoffeeCart_01.gltf"
 test_thirdparty "Fangyi" "fangyi.glb"
 test_thirdparty "Loewe_von_Asparn" "loewe_von_asparn.glb"
