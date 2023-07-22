@@ -891,6 +891,11 @@ Feature Tests
     <td><img src="ClearCoatTest_mtlx.png" align="middle" width=350 /></td>
   </tr>
   <tr>
+    <td>EmissiveStrengthTest</td>
+    <td><img src="EmissiveStrengthTest_preview.png" align="middle" width=350 /></td>
+    <td><img src="EmissiveStrengthTest_mtlx.png" align="middle" width=350 /></td>
+  </tr>
+  <tr>
     <td>EnvironmentTest</td>
     <td><img src="EnvironmentTest_preview.png" align="middle" width=350 /></td>
     <td><img src="EnvironmentTest_mtlx.png" align="middle" width=350 /></td>

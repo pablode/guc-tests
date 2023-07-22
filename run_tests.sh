@@ -572,7 +572,6 @@ test_sampleModel "BoxTexturedNonPowerOfTwo"       GT_SAMPLE_MODEL_FLAG_BINARY_AN
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "BoxVertexColors"                GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 test_sampleModel "ClearCoatTest"                  GT_SAMPLE_MODEL_FLAG_BINARY
-GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "EmissiveStrengthTest"           GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "EnvironmentTest"                0
 # Disabled: animations not supported
