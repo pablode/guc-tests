@@ -750,8 +750,9 @@ function test_gltfPbrImpl()
     fi
 }
 test_gltfPbrImpl "Runtime" "--gltf-pbr-impl runtime"
+# FIXME: this test is disabled due to crashing behaviour with USD v23.08
 # FIXME: remove USD's gltf_pbr.mtlx before graphical test execution
-test_gltfPbrImpl "File" "--gltf-pbr-impl file"
+#test_gltfPbrImpl "File" "--gltf-pbr-impl file"
 # FIXME: this test fails because of lighting differences!
 #test_gltfPbrImpl "Flattened" "--gltf-pbr-impl flattened"
 
