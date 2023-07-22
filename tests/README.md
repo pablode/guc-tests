@@ -861,6 +861,11 @@ Complex Models
     <td><img src="MosquitoInAmber_mtlx.png" align="middle" width=350 /></td>
   </tr>
   <tr>
+    <td>SheenCloth</td>
+    <td><img src="SheenCloth_preview.png" align="middle" width=350 /></td>
+    <td><img src="SheenCloth_mtlx.png" align="middle" width=350 /></td>
+  </tr>
+  <tr>
     <td>StainedGlassLamp</td>
     <td><img src="StainedGlassLamp_preview.png" align="middle" width=350 /></td>
     <td><img src="StainedGlassLamp_mtlx.png" align="middle" width=350 /></td>
@@ -964,6 +969,16 @@ Feature Tests
     <td>TextureSettingsTest</td>
     <td><img src="TextureSettingsTest_preview.png" align="middle" width=350 /></td>
     <td><img src="TextureSettingsTest_mtlx.png" align="middle" width=350 /></td>
+  </tr>
+  <tr>
+    <td>TextureTransformTest</td>
+    <td><img src="TextureTransformTest_preview.png" align="middle" width=350 /></td>
+    <td><img src="TextureTransformTest_mtlx.png" align="middle" width=350 /></td>
+  </tr>
+  <tr>
+    <td>TextureTransformMultiTest</td>
+    <td><img src="TextureTransformMultiTest_preview.png" align="middle" width=350 /></td>
+    <td><img src="TextureTransformMultiTest_mtlx.png" align="middle" width=350 /></td>
   </tr>
   <tr>
     <td>TransmissionRoughnessTest</td>

@@ -1,0 +1,35 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/SheenCloth/SheenCloth.usd@
+)
+{
+    float3 xformOp:scale = (10, 10, 10)
+    uniform token[] xformOpOrder = ["xformOp:scale"]
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "glTFAssetGenerator"
+    }
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    double3 xformOp:translate = (0.035, 0.179, 1.15)
+    uniform token[] xformOpOrder = ["xformOp:translate"]
+    float2 clippingRange = (0.5, 1.8)
+    float focalLength = 50
+    float horizontalAperture = 32
+    token projection = "perspective"
+    float verticalAperture = 19.5
+}
+

@@ -525,10 +525,8 @@ GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "ReciprocatingSaw"               GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "SciFiHelmet"                    0
-# Disabled: KHR_materials_variants not supported
-#test_sampleModel "SheenChair"                    GT_SAMPLE_MODEL_FLAG_BINARY
-# Disabled: KHR_texture_transform not supported
-#test_sampleModel "SheenCloth"                    0
+test_sampleModel "SheenChair"                     GT_SAMPLE_MODEL_FLAG_BINARY
+test_sampleModel "SheenCloth"                     0
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "Sponza"                         0
 # Disabled: Storm transparency flakyness
@@ -606,10 +604,8 @@ test_sampleModel "TextureCoordinateTest"          GT_SAMPLE_MODEL_FLAG_BINARY_AN
 # Note: HdStorm does not support one- and two-channel sRGB textures
 test_sampleModel "TextureLinearInterpolationTest" GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "TextureSettingsTest"            GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
-# Disabled: KHR_texture_transform not supported
-#test_sampleModel "TextureTransformMultiTest"     GT_SAMPLE_MODEL_FLAG_BINARY
-# Disabled: KHR_texture_transform not supported
-#test_sampleModel "TextureTransformTest"          0
+test_sampleModel "TextureTransformMultiTest"      GT_SAMPLE_MODEL_FLAG_BINARY
+test_sampleModel "TextureTransformTest"           0
 test_sampleModel "TransmissionRoughnessTest"      GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "TransmissionTest"               GT_SAMPLE_MODEL_FLAG_BINARY
 GT_DISABLE_GRAPHICAL=1 \
