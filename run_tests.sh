@@ -518,8 +518,6 @@ test_sampleModel "IridescenceLamp"                GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "IridescentDishWithOlives"       GT_SAMPLE_MODEL_FLAG_BINARY
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "Lantern"                        GT_SAMPLE_MODEL_FLAG_BINARY
-# Disabled: KHR_materials_variants not supported
-#test_sampleModel "MaterialsVariantsShoe"         GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "MosquitoInAmber"                GT_SAMPLE_MODEL_FLAG_BINARY
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "ReciprocatingSaw"               GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
@@ -773,6 +771,20 @@ if ! skip_or_print_test "UsdaDiff"; then
     if [ $? -ne 0 ] || ! diff --text -w "$USD_OUTPUT_FILE" "UsdaDiff.usda"; then
         print_error
     fi
+fi
+
+# Material Variants
+if ! skip_or_print_test "MaterialVariants"; then
+    IMAGE_WIDTH=400 test_graphical "MaterialVariants_Variant0" \
+                                   "input/glTF-Sample-Models/2.0/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf" \
+                                   "output/MaterialVariants/MaterialVariants_Variant0.usd" \
+                                   "MaterialVariants_Variant0"
+
+    IMAGE_WIDTH=400 test_graphical "MaterialVariants_Variant1" \
+                                   "input/glTF-Sample-Models/2.0/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf" \
+                                   "output/MaterialVariants/MaterialVariants_Variant1.usd" \
+                                   "MaterialVariants_Variant1" \
+                                   "--default-material-variant 1"
 fi
 
 # GeompropVis

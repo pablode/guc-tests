@@ -1039,7 +1039,28 @@ Feature Tests
 
 ### Custom Tests
 
-> Note: the [Ecosystem Limitations](https://github.com/pablode/guc/blob/main/docs/Ecosystem_Limitations.md) document has background information on these tests.
+<table>
+  <tr>
+    <th colspan=3>MaterialVariants</th>
+  </tr>
+  <tr>
+    <th>Variant</th>
+    <th>UsdPreviewSurface</th>
+    <th>MaterialX</th>
+  </tr>
+  <tr>
+    <td>Midnight (0, default)</td>
+    <td><img src="MaterialVariants_Variant0_preview.png" align="middle" width=300 /></td>
+    <td><img src="MaterialVariants_Variant0_mtlx.png" align="middle" width=300 /></td>
+  </tr>
+  <tr>
+    <td>Beach (1)</td>
+    <td><img src="MaterialVariants_Variant1_preview.png" align="middle" width=300 /></td>
+    <td><img src="MaterialVariants_Variant1_mtlx.png" align="middle" width=300 /></td>
+  </tr>
+</table>
+
+> Note: the [Ecosystem Limitations](https://github.com/pablode/guc/blob/main/docs/Ecosystem_Limitations.md) document has background information on the following tests.
 
 <table>
   <tr>
