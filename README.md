@@ -6,12 +6,10 @@ For test-specific information, please see the [Graphical Test Overview](tests).
 
 ## Local setup
 
-1. Build and install [USD](https://github.com/PixarAnimationStudios/USD/tree/v22.11) with the following flags:  
+1. Build and install [USD v23.08](https://github.com/PixarAnimationStudios/USD/tree/v23.08) with the following flags:  
 `--materialx --openimageio --build-args OpenImageIO,"-DOIIO_BUILD_TOOLS=ON"`
 2. Build guc in debug configuration, add it to your PATH
-3. Patch your USD MaterialX installation as follows: [MaterialX_patch.diff](https://github.com/pablode/USD/blob/8293f10bbc66b8ade36fd1c5ef66a9815aff3e07/.github/MaterialX_patch.diff)
-
-Then, execute `run_tests.sh` using _bash_.
+3. Execute `run_tests.sh` using _bash_
 
 ## Environment variables
 
