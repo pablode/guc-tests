@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "Asset"
-    doc = "Converted from glTF with guc 0.2"
+    doc = "Converted from glTF with guc 0.4"
     metersPerUnit = 1
     upAxis = "Y"
 )
@@ -20,20 +20,19 @@ def Xform "Asset" (
         {
             def "Materials"
             {
-                def Material "mat"
+                def Material "mat_"
                 {
-                    token outputs:surface.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node.outputs:surface>
+                    token outputs:surface.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat_/node.outputs:surface>
 
                     def Shader "node"
                     {
                         uniform token info:id = "UsdPreviewSurface"
-                        float3 inputs:diffuseColor.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node1.outputs:rgb>
+                        float3 inputs:diffuseColor.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat_/node1.outputs:rgb>
                         float3 inputs:emissiveColor = (0, 0, 0)
-                        float inputs:metallic.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node3.outputs:b>
+                        float inputs:metallic.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat_/node3.outputs:b>
                         float3 inputs:normal
                         float inputs:occlusion
-                        float inputs:opacity
-                        float inputs:roughness.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node5.outputs:g>
+                        float inputs:roughness.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat_/node5.outputs:g>
                         token outputs:surface
                     }
 
@@ -44,7 +43,7 @@ def Xform "Asset" (
                         asset inputs:file = @BaseColor_Plane.png@
                         float4 inputs:scale = (0.2, 0.2, 0.2, 0.8)
                         token inputs:sourceColorSpace = "sRGB"
-                        float2 inputs:st.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node2.outputs:result>
+                        float2 inputs:st.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat_/node2.outputs:result>
                         token inputs:wrapS = "repeat"
                         token inputs:wrapT = "repeat"
                         float3 outputs:rgb
@@ -64,7 +63,7 @@ def Xform "Asset" (
                         asset inputs:file = @MetallicRoughness_Plane.png@
                         float4 inputs:scale = (0, 0, 0, 0)
                         token inputs:sourceColorSpace = "raw"
-                        float2 inputs:st.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node4.outputs:result>
+                        float2 inputs:st.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat_/node4.outputs:result>
                         token inputs:wrapS = "repeat"
                         token inputs:wrapT = "repeat"
                         float outputs:b
@@ -84,7 +83,7 @@ def Xform "Asset" (
                         asset inputs:file = @MetallicRoughness_Plane.png@
                         float4 inputs:scale = (0, 0, 0, 0)
                         token inputs:sourceColorSpace = "raw"
-                        float2 inputs:st.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat/node6.outputs:result>
+                        float2 inputs:st.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat_/node6.outputs:result>
                         token inputs:wrapS = "repeat"
                         token inputs:wrapT = "repeat"
                         float outputs:g
@@ -122,7 +121,7 @@ def Xform "Asset" (
                                 }
                             }
                         )
-                        rel material:binding:preview = </Asset/Materials/UsdPreviewSurface/Materials/mat>
+                        rel material:binding:preview = </Asset/Materials/UsdPreviewSurface/Materials/mat_>
                         normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1)] (
                             customData = {
                                 dictionary guc = {
