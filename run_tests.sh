@@ -511,8 +511,6 @@ GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "Fox"                            GT_SAMPLE_MODEL_FLAG_BINARY
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "GearboxAssy"                    GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
-# Disabled: KHR_materials_variants not supported
-#test_sampleModel "GlamVelvetSofa"                GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "IridescenceLamp"                GT_SAMPLE_MODEL_FLAG_BINARY
 # Note: does not actually use KHR_materials_iridescence extension (yet)
 test_sampleModel "IridescentDishWithOlives"       GT_SAMPLE_MODEL_FLAG_BINARY
@@ -761,6 +759,7 @@ if ! skip_or_print_test "UsdaDiff"; then
 fi
 
 # Material Variants
+# TODO: could also test GlamVelvetSofa
 if ! skip_or_print_test "MaterialVariants"; then
     IMAGE_WIDTH=400 test_graphical "MaterialVariants_Variant0" \
                                    "input/glTF-Sample-Models/2.0/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf" \
