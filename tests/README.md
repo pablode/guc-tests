@@ -966,6 +966,11 @@ Feature Tests
     <td><img src="TextureCoordinateTest_mtlx.png" align="middle" width=350 /></td>
   </tr>
   <tr>
+    <td>TextureEncodingTest</td>
+    <td><img src="TextureEncodingTest_preview.png" align="middle" width=350 /></td>
+    <td><img src="TextureEncodingTest_mtlx.png" align="middle" width=350 /></td>
+  </tr>
+  <tr>
     <td>TextureSettingsTest</td>
     <td><img src="TextureSettingsTest_preview.png" align="middle" width=350 /></td>
     <td><img src="TextureSettingsTest_mtlx.png" align="middle" width=350 /></td>
@@ -989,6 +994,11 @@ Feature Tests
     <td>TransmissionTest</td>
     <td><img src="TransmissionTest_preview.png" align="middle" width=350 /></td>
     <td><img src="TransmissionTest_mtlx.png" align="middle" width=350 /></td>
+  </tr>
+  <tr>
+    <td>UnlitTest</td>
+    <td><img src="UnlitTest_preview.png" align="middle" width=350 /></td>
+    <td><img src="UnlitTest_mtlx.png" align="middle" width=350 /></td>
   </tr>
   <tr>
     <td>VertexColorTest</td>
@@ -1068,51 +1078,6 @@ Feature Tests
   </tr>
   <tr>
     <td><img src="GeompropVis_mtlx.png" align="middle" width=324 /></td>
-  </tr>
-</table>
-
-<table>
-  <tr>
-    <th colspan=2>TextureEncodingTest</th>
-  </tr>
-  <tr>
-    <th>Variant</th>
-    <th>Render</th>
-  </tr>
-  <tr>
-    <td align="middle">UsdPreviewSurface</td>
-    <td><img src="TextureEncodingTest_preview.png" align="middle" width=300 /></td>
-  </tr>
-  <tr>
-    <td align="middle">MaterialX<br/>colorspace attributes</td>
-    <td><img src="TextureEncodingTest_colorspace_attributes_mtlx.png" align="middle" width=300 /></td>
-  </tr>
-  <tr>
-    <td align="middle">MaterialX<br/>explicit colorspace transforms</td>
-    <td><img src="TextureEncodingTest_explicit_colorspace_transforms_mtlx.png" align="middle" width=300 /></td>
-  </tr>
-  <tr>
-    <td align="middle">MaterialX<br/>HdStorm compat</td>
-    <td><img src="TextureEncodingTest_hdstorm_compat_mtlx.png" align="middle" width=300 /></td>
-  </tr>
-</table>
-
-<table>
-  <tr>
-    <th>Default conversion</th>
-    <th>HdStorm compatibility</th>
-  </tr>
-  <tr>
-    <td><img src="NoHdStormCompat_ABeautifulGame_mtlx.png" align="middle" width=300 /></td>
-    <td><img src="ABeautifulGame_mtlx.png" align="middle" width=300 /></td>
-  </tr>
-  <tr>
-    <td><img src="NoHdStormCompat_DamagedHelmet_mtlx.png" align="middle" width=300 /></td>
-    <td><img src="DamagedHelmet_mtlx.png" align="middle" width=300 /></td>
-  </tr>
-  <tr>
-    <td><img src="NoHdStormCompat_ToyCar_mtlx.png" align="middle" width=300 /></td>
-    <td><img src="ToyCar_mtlx.png" align="middle" width=300 /></td>
   </tr>
 </table>
 
