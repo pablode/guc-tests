@@ -120,7 +120,7 @@ convert_glTF_to_USD()
 # $3+: (opt.) additional conversion flags
 convert_glTF_to_hdSt_USD()
 {
-    convert_glTF_to_USD $1 $2 --emit-mtlx --hdstorm-compat ${@:3}
+    convert_glTF_to_USD $1 $2 --emit-mtlx ${@:3}
 }
 
 # $1: test base name
@@ -819,31 +819,6 @@ if ! skip_or_print_test "Cameras"; then
         IMAGE_WIDTH=400 render_and_compare "Cameras" "Cameras_01_preview" "Cameras_01_preview" "/T_Scene/Scenes/scene/node_2/cam"
     fi
 fi
-
-# NoHdStormCompat
-# $1: base test name suffix
-# $2: input glTF file
-test_noHdStormCompat()
-{
-    TEST_NAME="NoHdStormCompat_$1"
-    if skip_or_print_test $TEST_NAME || [ ${GT_DISABLE_GRAPHICAL:-0} -ne 0 ] || [ ${GT_DISABLE_GRAPHICAL_MTLX:-0} -ne 0 ]; then
-        return
-    fi
-
-    USD_OUTPUT_FILE="output/NoHdStormCompat_$1/$1.usd"
-    GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 convert_glTF_to_USD $2 $USD_OUTPUT_FILE --emit-mtlx
-
-    if [ $? -ne 0 ]; then
-        print_error
-        return
-    else
-        IMAGE_WIDTH=800 render_and_compare $TEST_NAME "${TEST_NAME}_mtlx"
-    fi
-}
-
-test_noHdStormCompat "ABeautifulGame" "input/glTF-Sample-Models/2.0/ABeautifulGame/glTF/ABeautifulGame.gltf"
-test_noHdStormCompat "DamagedHelmet" "input/glTF-Sample-Models/2.0/DamagedHelmet/glTF/DamagedHelmet.gltf"
-test_noHdStormCompat "ToyCar" "input/glTF-Sample-Models/2.0/ToyCar/glTF/ToyCar.gltf"
 
 #
 # Cleanup
