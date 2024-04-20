@@ -615,7 +615,7 @@ test_sampleModel "TwoSidedPlane"                  0
 #GT_DISABLE_GRAPHICAL=1 \
 #test_sampleModel "Unicode❤♻Test"              GT_SAMPLE_MODEL_FLAG_BINARY
 # Disabled: KHR_materials_unlit not supported
-#test_sampleModel "UnlitTest"                     GT_SAMPLE_MODEL_FLAG_BINARY
+test_sampleModel "UnlitTest"                      GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "VertexColorTest"                GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 
 ##
