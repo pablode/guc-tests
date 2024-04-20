@@ -643,16 +643,15 @@ textureEncodingResizeImage()
     oiiotool $1 --resize 2x2 -o $TMP_IMG_NAME
     mv $TMP_IMG_NAME $1
 }
-# $1: test name suffix
-# $2+: additional conversion flags
-test_textureEncodingMtlx()
-{
-    TEST_NAME="TextureEncodingTest_$1"
+if ! skip_or_print_test "TextureEncodingTest"; then
+    TEST_NAME="TextureEncodingTest"
     GLTF_INPUT_FILE="input/glTF-Sample-Models/2.0/TextureEncodingTest/glTF/TextureEncodingTest.gltf"
-    USD_OUTPUT_DIR="output/TextureEncodingTest_$1"
+    USD_OUTPUT_DIR="output/TextureEncodingTest"
     USD_OUTPUT_FILE="$USD_OUTPUT_DIR/TextureEncodingTest.usd"
 
-    GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE --emit-mtlx ${@:2}
+    IMAGE_WIDTH=400 GT_DISABLE_GRAPHICAL_MTLX=1 test_graphical $TEST_NAME $GLTF_INPUT_FILE $USD_OUTPUT_FILE #$TEST_NAME
+
+    GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE --emit-mtlx
 
     # HdStorm renders the 1x1 green textures as white. Resizing them yields correct results.
     textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_0.png"
@@ -668,18 +667,6 @@ test_textureEncodingMtlx()
     elif [ ${GT_DISABLE_GRAPHICAL:-0} -eq 0 ] && [ ${GT_DISABLE_GRAPHICAL_MTLX:-0} -eq 0 ]; then
         IMAGE_WIDTH=400 render_and_compare $TEST_NAME "${TEST_NAME}_mtlx"
     fi
-}
-
-if ! skip_or_print_test "TextureEncodingTest"; then
-    GT_DISABLE_GRAPHICAL_MTLX=1 \
-    IMAGE_WIDTH=400 test_graphical "TextureEncodingTest" \
-                                   "input/glTF-Sample-Models/2.0/TextureEncodingTest/glTF/TextureEncodingTest.gltf" \
-                                   "output/TextureEncodingTest/TextureEncodingTest.usd" \
-                                   "TextureEncodingTest" \
-                                   ""
-    test_textureEncodingMtlx "colorspace_attributes" ""
-    test_textureEncodingMtlx "explicit_colorspace_transforms" "--explicit-colorspace-transforms"
-    test_textureEncodingMtlx "hdstorm_compat" "--hdstorm-compat"
 fi
 
 # UsdGlTF
