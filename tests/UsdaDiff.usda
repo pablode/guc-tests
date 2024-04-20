@@ -27,10 +27,10 @@ def Xform "Asset" (
                     def Shader "node"
                     {
                         uniform token info:id = "UsdPreviewSurface"
-                        float3 inputs:diffuseColor.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat_/node1.outputs:rgb>
-                        float3 inputs:emissiveColor = (0, 0, 0)
+                        color3f inputs:diffuseColor.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat_/node1.outputs:rgb>
+                        color3f inputs:emissiveColor = (0, 0, 0)
                         float inputs:metallic.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat_/node3.outputs:b>
-                        float3 inputs:normal
+                        normal3f inputs:normal
                         float inputs:occlusion
                         float inputs:roughness.connect = </Asset/Materials/UsdPreviewSurface/Materials/mat_/node5.outputs:g>
                         token outputs:surface
