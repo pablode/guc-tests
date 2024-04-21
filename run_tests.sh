@@ -100,7 +100,7 @@ render_and_compare()
 convert_glTF_to_USD()
 {
     if [ ${GT_DISABLE_CONVERSION:-0} -eq 0 ]; then
-        guc $1 $2 ${@:3}
+        guc ${@:3} $1 $2
 
         if [ $? -ne 0 ]; then
             return 1
