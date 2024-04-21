@@ -714,9 +714,10 @@ function test_cmdLine()
     fi
 }
 test_cmdLine "Cmdline_empty" ""
-test_cmdLine "Cmdline_missing_file" "missing_file.gltf output.usd"
-test_cmdLine "Cmdline_empty_flag" "missing_file.gltf output.usd -"
-test_cmdLine "Cmdline_illegal_flag" "missing_file.gltf output.usd --illegal"
+test_cmdLine "Cmdline_single_file"  "input.gltf"
+test_cmdLine "Cmdline_missing_file" "__missing_file.gltf output.usd"
+test_cmdLine "Cmdline_empty_flag"   "- input.gltf output.usd"
+test_cmdLine "Cmdline_illegal_flag" "--illegal input.gltf output.usd"
 
 # Mtlx-as-UsdShade
 if ! skip_or_print_test "MtlxAsUsdShade"; then
