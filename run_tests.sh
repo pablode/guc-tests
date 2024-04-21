@@ -731,7 +731,7 @@ fi
 # UsdaDiff
 if ! skip_or_print_test "UsdaDiff"; then
     USD_OUTPUT_FILE="output/UsdaDiff/UsdaDiff.usda"
-    convert_glTF_to_USD "input/glTF-Asset-Generator/Output/Positive/Material_MetallicRoughness/Material_MetallicRoughness_11.gltf" $USD_OUTPUT_FILE
+    convert_glTF_to_USD "input/glTF-Asset-Generator/Output/Positive/Material_MetallicRoughness/Material_MetallicRoughness_11.gltf" $USD_OUTPUT_FILE -m -u
 
     if [ $? -ne 0 ] || ! diff --text -w "$USD_OUTPUT_FILE" "UsdaDiff.usda"; then
         print_error
