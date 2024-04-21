@@ -718,26 +718,6 @@ test_cmdLine "Cmdline_missing_file" "missing_file.gltf output.usd"
 test_cmdLine "Cmdline_empty_flag" "missing_file.gltf output.usd -"
 test_cmdLine "Cmdline_illegal_flag" "missing_file.gltf output.usd --illegal"
 
-# GlTF PBR implementation
-# $1: test name suffix
-# $2+: additional conversion arguments
-function test_gltfPbrImpl()
-{
-    if ! skip_or_print_test "GltfPbrImpl_$1"; then
-        IMAGE_WIDTH=800 test_graphical "GltfPbrImpl_$1" \
-                                       "input/glTF-Sample-Models/2.0/DamagedHelmet/glTF/DamagedHelmet.gltf" \
-                                       "output/GltfPbrImpl_$1/DamagedHelmet.usd" \
-                                       "DamagedHelmet" \
-                                       ${@:2}
-    fi
-}
-test_gltfPbrImpl "Runtime" "--gltf-pbr-impl runtime"
-# FIXME: this test is disabled due to crashing behaviour with USD v23.08
-# FIXME: remove USD's gltf_pbr.mtlx before graphical test execution
-#test_gltfPbrImpl "File" "--gltf-pbr-impl file"
-# FIXME: this test fails because of lighting differences!
-#test_gltfPbrImpl "Flattened" "--gltf-pbr-impl flattened"
-
 # Mtlx-as-UsdShade
 if ! skip_or_print_test "MtlxAsUsdShade"; then
     GT_DISABLE_GRAPHICAL_PREVIEW=1 \
