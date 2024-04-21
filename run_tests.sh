@@ -120,7 +120,7 @@ convert_glTF_to_USD()
 # $3+: (opt.) additional conversion flags
 convert_glTF_to_hdSt_USD()
 {
-    convert_glTF_to_USD $1 $2 --emit-mtlx ${@:3}
+    convert_glTF_to_USD $1 $2 --emit-mtlx --hdstorm-compat ${@:3}
 }
 
 # $1: test base name
