@@ -52,7 +52,7 @@ def Xform "Asset" (
                     def Shader "node2"
                     {
                         uniform token info:id = "UsdPrimvarReader_float2"
-                        string inputs:varname = "st0"
+                        string inputs:varname = "st"
                         float2 outputs:result
                     }
 
@@ -72,7 +72,7 @@ def Xform "Asset" (
                     def Shader "node4"
                     {
                         uniform token info:id = "UsdPrimvarReader_float2"
-                        string inputs:varname = "st0"
+                        string inputs:varname = "st"
                         float2 outputs:result
                     }
 
@@ -92,7 +92,7 @@ def Xform "Asset" (
                     def Shader "node6"
                     {
                         uniform token info:id = "UsdPrimvarReader_float2"
-                        string inputs:varname = "st0"
+                        string inputs:varname = "st"
                         float2 outputs:result
                     }
                 }
@@ -196,7 +196,7 @@ def Xform "Asset" (
                         color3f inputs:default = (1, 1, 1) (
                             colorSpace = "lin_rec709"
                         )
-                        string inputs:geomprop = "color0"
+                        string inputs:geomprop = "color"
                         color3f outputs:out
                     }
 
@@ -226,7 +226,7 @@ def Xform "Asset" (
                     def Shader "node4"
                     {
                         uniform token info:id = "ND_geompropvalue_vector2"
-                        string inputs:geomprop = "st0"
+                        string inputs:geomprop = "st"
                         float2 outputs:out
                     }
 
@@ -259,7 +259,7 @@ def Xform "Asset" (
                     def Shader "node8"
                     {
                         uniform token info:id = "ND_geompropvalue_vector2"
-                        string inputs:geomprop = "st0"
+                        string inputs:geomprop = "st"
                         float2 outputs:out
                     }
 
@@ -293,7 +293,7 @@ def Xform "Asset" (
                     def Shader "node12"
                     {
                         uniform token info:id = "ND_geompropvalue_vector2"
-                        string inputs:geomprop = "st0"
+                        string inputs:geomprop = "st"
                         float2 outputs:out
                     }
 
@@ -349,13 +349,13 @@ def Xform "Asset" (
                             interpolation = "vertex"
                         )
                         point3f[] points = [(-0.5, -0.5, 0), (0.5, -0.5, 0), (0.5, 0.5, 0), (-0.5, -0.5, 0), (0.5, 0.5, 0), (-0.5, 0.5, 0)]
-                        float3[] primvars:color0 = [(1, 0, 0), (0, 0, 1), (1, 0, 0), (1, 0, 0), (1, 0, 0), (0, 0, 1)] (
+                        float3[] primvars:color = [(1, 0, 0), (0, 0, 1), (1, 0, 0), (1, 0, 0), (1, 0, 0), (0, 0, 1)] (
                             interpolation = "vertex"
                         )
                         color3f[] primvars:displayColor = [(0.2, 0, 0), (0, 0, 0.2), (0.2, 0, 0), (0.2, 0, 0), (0.2, 0, 0), (0, 0, 0.2)] (
                             interpolation = "vertex"
                         )
-                        texCoord2f[] primvars:st0 = [(0, 0), (1, 0), (1, 1), (0, 0), (1, 1), (0, 1)] (
+                        texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 0), (1, 1), (0, 1)] (
                             interpolation = "vertex"
                         )
                         uniform token subdivisionScheme = "none"
