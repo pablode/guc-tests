@@ -1070,18 +1070,6 @@ Feature Tests
   </tr>
 </table>
 
-> Note: the [Ecosystem Limitations](https://github.com/pablode/guc/blob/main/docs/Ecosystem_Limitations.md) document has background information on the following tests.
-
-<table>
-  <tr>
-    <th>GeompropVis</th>
-  </tr>
-  <tr>
-    <td><img src="GeompropVis_mtlx.png" align="middle" width=324 /></td>
-  </tr>
-</table>
-
-
 ## Discussion
 
 Minor observations:
