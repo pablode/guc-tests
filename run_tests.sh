@@ -593,8 +593,6 @@ test_sampleModel "SimpleMeshes"                   GT_SAMPLE_MODEL_FLAG_EMBEDDED
 #test_sampleModel "SimpleMorph"                   GT_SAMPLE_MODEL_FLAG_EMBEDDED
 #test_sampleModel "SimpleSkin"                    GT_SAMPLE_MODEL_FLAG_EMBEDDED
 test_sampleModel "SimpleSparseAccessor"           GT_SAMPLE_MODEL_FLAG_EMBEDDED
-# Disabled: KHR_materials_pbrSpecularGlossiness is 'archived'
-#test_sampleModel "SpecGlossVsMetalRough"         GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "SpecularTest"                   GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "TextureCoordinateTest"          GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 # Note: HdStorm does not support one- and two-channel sRGB textures
@@ -611,8 +609,7 @@ GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "TwoSidedPlane"                  0
 # Disabled: not supported by cgltf
 #GT_DISABLE_GRAPHICAL=1 \
-#test_sampleModel "Unicode❤♻Test"              GT_SAMPLE_MODEL_FLAG_BINARY
-# Disabled: KHR_materials_unlit not supported
+#test_sampleModel "Unicode❤♻Test"                 GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "UnlitTest"                      GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "VertexColorTest"                GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 
