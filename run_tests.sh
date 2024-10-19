@@ -155,6 +155,7 @@ test_graphical()
 # Use bitflags to handle additional asset encodings
 GT_SAMPLE_MODEL_FLAG_BINARY=1
 GT_SAMPLE_MODEL_FLAG_EMBEDDED=2
+GT_SAMPLE_MODEL_FLAG_MESHOPT=4
 GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED=$(( GT_SAMPLE_MODEL_FLAG_BINARY | GT_SAMPLE_MODEL_FLAG_EMBEDDED ))
 
 # $1: model base name (e.g. 'ToyCar')
@@ -183,6 +184,20 @@ test_sampleModel()
     # glTF-Embedded
     if (( (${2:-0} & GT_SAMPLE_MODEL_FLAG_EMBEDDED) != 0 )); then
         GLTF_INPUT_FILE=input/glTF-Sample-Models/2.0/$1/glTF-Embedded/$1.gltf
+
+        GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 \
+            convert_glTF_to_hdSt_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
+        if [ $? -ne 0 ]; then print_error; fi
+
+        convert_glTF_to_hdSt_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
+        if [ $? -ne 0 ]; then print_error; fi
+
+        rm -rf $USD_OUTPUT_DIR
+    fi
+
+    # glTF-Meshopt
+    if (( (${2:-0} & GT_SAMPLE_MODEL_FLAG_MESHOPT) != 0 )); then
+        GLTF_INPUT_FILE=input/glTF-Sample-Models/2.0/$1/glTF-Meshopt/$1.gltf
 
         GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 \
             convert_glTF_to_hdSt_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
@@ -490,7 +505,7 @@ GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "BoomBoxWithAxes"                0
 # Note: animations, skinning ignored
 GT_DISABLE_GRAPHICAL=1 \
-test_sampleModel "BrainStem"                      GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
+test_sampleModel "BrainStem"                      $(( GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED | GT_SAMPLE_MODEL_FLAG_MESHOPT ))
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "Buggy"                          GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 # Disabled: animations, skinning not supported
@@ -502,7 +517,7 @@ test_sampleModel "Corset"                         GT_SAMPLE_MODEL_FLAG_BINARY
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "Cube"                           0
 test_sampleModel "DamagedHelmet"                  GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
-test_sampleModel "DragonAttenuation"              GT_SAMPLE_MODEL_FLAG_BINARY
+test_sampleModel "DragonAttenuation"              $(( GT_SAMPLE_MODEL_FLAG_BINARY | GT_SAMPLE_MODEL_FLAG_MESHOPT ))
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "Duck"                           GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 GT_DISABLE_GRAPHICAL=1 \
