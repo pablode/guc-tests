@@ -38,8 +38,13 @@ print_error()
 # $1: test name
 skip_or_print_test()
 {
-    # Don't skip if filter is not set, or if filter matches test name
-    if [ -z "$TEST_FILTER" ] || { echo \"$1\" | grep -qE "$TEST_FILTER"; }; then
+    # Check if the test name matches the provided filter string.
+    #
+    # We use a pattern similar to GTest: "<ALLOWED>-<DISALLOWED>". This is because grep on macOS
+    # does not have negative regex lookahead and thus requires two regular expressions for exclusion.
+    IFS='-' read -ra FILTER_PARTS <<< "$TEST_FILTER"
+
+    if [ -z "$TEST_FILTER" ] || { { echo \"$1\" | grep -Eq "${FILTER_PARTS[0]}"; } && { [ -z "${FILTER_PARTS[1]}" ] || ! { echo \"$1\" | grep -Eq "${FILTER_PARTS[1]}"; } } }; then
         echo ========= Test $1 =========
         return 1
     else
