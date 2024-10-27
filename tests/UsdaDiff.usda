@@ -1,7 +1,7 @@
 #usda 1.0
 (
     defaultPrim = "Asset"
-    doc = "Converted from glTF with guc 0.4"
+    doc = "Converted from glTF with guc 0.5"
     metersPerUnit = 1
     upAxis = "Y"
 )
