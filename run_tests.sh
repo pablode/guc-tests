@@ -64,7 +64,7 @@ render_and_compare()
     else
         USDRECORD_EXECUTABLE=usdrecord
     fi
-    MSYS2_ARG_CONV_EXCL='*' $USDRECORD_EXECUTABLE $1.usda output/$2.png --imageWidth $IMAGE_WIDTH --camera ${4:-"T_Camera"}
+    MSYS2_ARG_CONV_EXCL='*' $USDRECORD_EXECUTABLE $1.usda output/$2.png --imageWidth $IMAGE_WIDTH --camera ${4:-"T_Camera"} --enableDomeLightVisibility --disableCameraLight
 
     if [ $? -ne 0 ]; then
         print_error
