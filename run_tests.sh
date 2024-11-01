@@ -76,10 +76,11 @@ render_and_compare()
         # We use oiiotool for that, but writing to the same file leads to an access denial on Windows. By writing a
         # temporary file to a temporary directory outside of the repository, we avoid pollution in case the script
         # execution is prematurely stopped.
+        REF_FILE_NAME=${3:-$2}.png
         DIFF_FILE_NAME=$2_diff.png
         TMP_DIFF_FILE="$TMP_DIR/$DIFF_FILE_NAME"
 
-        idiff -o $TMP_DIFF_FILE -od -abs -scale 100 -fail 0.1 -failpercent 0.004 -hardfail 0.2 -warn 0.01 -warnpercent 0.001 output/$2.png ${3:-$2}.png
+        idiff -o $TMP_DIFF_FILE -od -abs -scale 100 -fail 0.1 -failpercent 0.004 -hardfail 0.2 -warn 0.01 -warnpercent 0.001 output/$2.png $REF_FILE_NAME
 
         IDIFF_RESULT=$?
 
@@ -90,6 +91,9 @@ render_and_compare()
                 # Delete temp file now in case the script is interrupted before the temp dir is deleted
                 rm $TMP_DIFF_FILE
             fi
+
+            # Copy reference image
+            cp $REF_FILE_NAME output/$2_ref.png
 
             if [[ $IDIFF_RESULT -ne 1 ]]; then
                 print_error
