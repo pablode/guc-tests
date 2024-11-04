@@ -165,7 +165,9 @@ test_graphical()
 GT_SAMPLE_MODEL_FLAG_BINARY=1
 GT_SAMPLE_MODEL_FLAG_EMBEDDED=2
 GT_SAMPLE_MODEL_FLAG_MESHOPT=4
+GT_SAMPLE_MODEL_FLAG_DRACO=8
 GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED=$(( GT_SAMPLE_MODEL_FLAG_BINARY | GT_SAMPLE_MODEL_FLAG_EMBEDDED ))
+GT_SAMPLE_MODEL_FLAG_ALL=$(( GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED | GT_SAMPLE_MODEL_FLAG_DRACO ))
 
 # $1: model base name (e.g. 'ToyCar')
 # $2: encoding bitflag (e.g. binary | embedded)
@@ -207,6 +209,20 @@ test_sampleModel()
     # glTF-Meshopt
     if (( (${2:-0} & GT_SAMPLE_MODEL_FLAG_MESHOPT) != 0 )); then
         GLTF_INPUT_FILE=input/glTF-Sample-Models/2.0/$1/glTF-Meshopt/$1.gltf
+
+        GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 \
+            convert_glTF_to_hdSt_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
+        if [ $? -ne 0 ]; then print_error; fi
+
+        convert_glTF_to_hdSt_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
+        if [ $? -ne 0 ]; then print_error; fi
+
+        rm -rf $USD_OUTPUT_DIR
+    fi
+
+    # glTF-Draco
+    if (( (${2:-0} & GT_SAMPLE_MODEL_FLAG_DRACO) != 0 )); then
+        GLTF_INPUT_FILE=input/glTF-Sample-Models/2.0/$1/glTF-Draco/$1.gltf
 
         GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 \
             convert_glTF_to_hdSt_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
@@ -494,32 +510,33 @@ GT_DISABLE_GRAPHICAL_PREVIEW=1 test_generatorAsset "Texture_Sampler" "13"
 ##
 IMAGE_WIDTH=800
 
+
 ###
 ### Complex Models
 ###
-test_sampleModel "2CylinderEngine"                GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
+test_sampleModel "2CylinderEngine"                $(( GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED | GT_SAMPLE_MODEL_FLAG_DRACO ))
 test_sampleModel "ABeautifulGame"                 0
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "AntiqueCamera"                  GT_SAMPLE_MODEL_FLAG_BINARY
 GT_DISABLE_GRAPHICAL=1 \
-test_sampleModel "Avocado"                        GT_SAMPLE_MODEL_FLAG_BINARY
+test_sampleModel "Avocado"                        $(( GT_SAMPLE_MODEL_FLAG_BINARY | GT_SAMPLE_MODEL_FLAG_DRACO ))
 GT_DISABLE_GRAPHICAL=1 \
-test_sampleModel "BarramundiFish"                 GT_SAMPLE_MODEL_FLAG_BINARY
+test_sampleModel "BarramundiFish"                 $(( GT_SAMPLE_MODEL_FLAG_BINARY | GT_SAMPLE_MODEL_FLAG_DRACO ))
 GT_DISABLE_GRAPHICAL=1 \
-test_sampleModel "BoomBox"                        GT_SAMPLE_MODEL_FLAG_BINARY
+test_sampleModel "BoomBox"                        $(( GT_SAMPLE_MODEL_FLAG_BINARY | GT_SAMPLE_MODEL_FLAG_DRACO ))
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "BoomBoxWithAxes"                0
 # Note: animations, skinning ignored
 GT_DISABLE_GRAPHICAL=1 \
-test_sampleModel "BrainStem"                      $(( GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED | GT_SAMPLE_MODEL_FLAG_MESHOPT ))
+test_sampleModel "BrainStem"                      GT_SAMPLE_MODEL_FLAG_ALL
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "Buggy"                          GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 # Disabled: animations, skinning not supported
-#test_sampleModel "CesiumMan"                     GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
+#test_sampleModel "CesiumMan"                     $(( GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED | GT_SAMPLE_MODEL_FLAG_DRACO ))
 GT_DISABLE_GRAPHICAL=1 \
-test_sampleModel "CesiumMilkTruck"                GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
+test_sampleModel "CesiumMilkTruck"                $(( GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED | GT_SAMPLE_MODEL_FLAG_DRACO ))
 GT_DISABLE_GRAPHICAL=1 \
-test_sampleModel "Corset"                         GT_SAMPLE_MODEL_FLAG_BINARY
+test_sampleModel "Corset"                         $(( GT_SAMPLE_MODEL_FLAG_BINARY | GT_SAMPLE_MODEL_FLAG_DRACO ))
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "Cube"                           0
 test_sampleModel "DamagedHelmet"                  GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
@@ -531,15 +548,15 @@ test_sampleModel "FlightHelmet"                   0
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "Fox"                            GT_SAMPLE_MODEL_FLAG_BINARY
 GT_DISABLE_GRAPHICAL=1 \
-test_sampleModel "GearboxAssy"                    GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
+test_sampleModel "GearboxAssy"                    $(( GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED | GT_SAMPLE_MODEL_FLAG_DRACO ))
 test_sampleModel "IridescenceLamp"                GT_SAMPLE_MODEL_FLAG_BINARY
 # Note: does not actually use KHR_materials_iridescence extension (yet)
 test_sampleModel "IridescentDishWithOlives"       GT_SAMPLE_MODEL_FLAG_BINARY
 GT_DISABLE_GRAPHICAL=1 \
-test_sampleModel "Lantern"                        GT_SAMPLE_MODEL_FLAG_BINARY
+test_sampleModel "Lantern"                        $(( GT_SAMPLE_MODEL_FLAG_BINARY | GT_SAMPLE_MODEL_FLAG_DRACO ))
 test_sampleModel "MosquitoInAmber"                GT_SAMPLE_MODEL_FLAG_BINARY
 GT_DISABLE_GRAPHICAL=1 \
-test_sampleModel "ReciprocatingSaw"               GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
+test_sampleModel "ReciprocatingSaw"               $(( GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED | GT_SAMPLE_MODEL_FLAG_DRACO ))
 GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "SciFiHelmet"                    0
 test_sampleModel "SheenChair"                     GT_SAMPLE_MODEL_FLAG_BINARY
@@ -553,9 +570,9 @@ GT_DISABLE_GRAPHICAL=1 \
 test_sampleModel "Suzanne"                        0
 test_sampleModel "ToyCar"                         GT_SAMPLE_MODEL_FLAG_BINARY
 GT_DISABLE_GRAPHICAL=1 \
-test_sampleModel "VC"                             GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
+test_sampleModel "VC"                             $(( GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED | GT_SAMPLE_MODEL_FLAG_DRACO ))
 GT_DISABLE_GRAPHICAL=1 \
-test_sampleModel "WaterBottle"                    GT_SAMPLE_MODEL_FLAG_BINARY
+test_sampleModel "WaterBottle"                    $(( GT_SAMPLE_MODEL_FLAG_BINARY | GT_SAMPLE_MODEL_FLAG_DRACO ))
 
 ###
 ### Feature Tests
@@ -598,7 +615,7 @@ test_sampleModel "LightsPunctualLamp"             GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "MetalRoughSpheres"              GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 test_sampleModel "MetalRoughSpheresNoTextures"    GT_SAMPLE_MODEL_FLAG_BINARY
 # Disabled: skinning not supported
-#test_sampleModel "MorphPrimitivesTest"           GT_SAMPLE_MODEL_FLAG_BINARY
+#test_sampleModel "MorphPrimitivesTest"           $(( GT_SAMPLE_MODEL_FLAG_BINARY | GT_SAMPLE_MODEL_FLAG_DRACO ))
 # Disabled: skinning not supported
 #test_sampleModel "MorphStressTest"               GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "MultiUVTest"                    GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
@@ -607,7 +624,7 @@ test_sampleModel "NormalTangentTest"              GT_SAMPLE_MODEL_FLAG_BINARY_AN
 test_sampleModel "OrientationTest"                GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 # Disabled: animations, skinning not supported
 #test_sampleModel "RecursiveSkeletons"            GT_SAMPLE_MODEL_FLAG_BINARY
-#test_sampleModel "RiggedFigure"                  GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
+#test_sampleModel "RiggedFigure"                  $(( GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED | GT_SAMPLE_MODEL_FLAG_DRACO ))
 #test_sampleModel "RiggedSimple"                  GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
 test_sampleModel "SimpleMeshes"                   GT_SAMPLE_MODEL_FLAG_EMBEDDED
 # Disabled: skinning not supported
