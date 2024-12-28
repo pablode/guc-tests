@@ -364,7 +364,6 @@ test_generatorAsset "Material_AlphaMask" "06"
 test_generatorAsset "Material_DoubleSided" "00"
 test_generatorAsset "Material_DoubleSided" "01"
 test_generatorAsset "Material_DoubleSided" "02"
-# Note: correct tangents only possible with patched gltf_pbr.mtlx
 GT_DISABLE_GRAPHICAL_PREVIEW=1 test_generatorAsset "Material_DoubleSided" "03"
 test_generatorAsset "Material_DoubleSided" "04"
 test_generatorAsset "Material_MetallicRoughness" "00"
@@ -404,7 +403,6 @@ test_generatorAsset "Mesh_PrimitiveAttribute" "02"
 test_generatorAsset "Mesh_PrimitiveAttribute" "03"
 test_generatorAsset "Mesh_PrimitiveAttribute" "04"
 test_generatorAsset "Mesh_PrimitiveAttribute" "05"
-# Note: correct tangents only possible with patched gltf_pbr.mtlx
 GT_DISABLE_GRAPHICAL_PREVIEW=1 test_generatorAsset "Mesh_PrimitiveAttribute" "06"
 # Note: HdStorm can't render lines and points
 GT_DISABLE_GRAPHICAL=1 \
@@ -467,7 +465,6 @@ test_generatorAsset "Node_NegativeScale" "06"
 test_generatorAsset "Node_NegativeScale" "07"
 test_generatorAsset "Node_NegativeScale" "08"
 test_generatorAsset "Node_NegativeScale" "09"
-# Note: correct tangents only possible with patched gltf_pbr.mtlx
 GT_DISABLE_GRAPHICAL_PREVIEW=1 test_generatorAsset "Node_NegativeScale" "10"
 GT_DISABLE_GRAPHICAL_PREVIEW=1 test_generatorAsset "Node_NegativeScale" "11"
 GT_DISABLE_GRAPHICAL_PREVIEW=1 test_generatorAsset "Node_NegativeScale" "12"
@@ -664,7 +661,7 @@ if ! skip_or_print_test "TextureEncodingTest"; then
     USD_OUTPUT_DIR="output/TextureEncodingTest"
     USD_OUTPUT_FILE="$USD_OUTPUT_DIR/TextureEncodingTest.usd"
 
-    IMAGE_WIDTH=400 GT_DISABLE_GRAPHICAL_MTLX=1 test_graphical $TEST_NAME $GLTF_INPUT_FILE $USD_OUTPUT_FILE #$TEST_NAME
+    IMAGE_WIDTH=400 GT_DISABLE_GRAPHICAL_MTLX=1 test_graphical $TEST_NAME $GLTF_INPUT_FILE $USD_OUTPUT_FILE
 
     GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE --emit-mtlx
 
