@@ -79,7 +79,7 @@ render_and_compare()
         DIFF_FILE_NAME=$2_diff.png
         TMP_DIFF_FILE="$TMP_DIR/$DIFF_FILE_NAME"
 
-        idiff -o $TMP_DIFF_FILE -od -abs -scale 100 -fail 0.1 -failpercent 0.004 -hardfail 0.2 -warn 0.01 -warnpercent 0.001 output/$2.png ${3:-$2}.png
+        idiff -o $TMP_DIFF_FILE -od -abs -scale 100 -fail 0.05 -failpercent 0.004 -hardfail 0.2 -warn 0.01 -warnpercent 0.001 output/$2.png ${3:-$2}.png
 
         IDIFF_RESULT=$?
 
