@@ -84,6 +84,10 @@ render_and_compare()
         IDIFF_RESULT=$?
 
         if [ $IDIFF_RESULT -ne 0 ]; then
+
+            # Copy ref image to output dir
+            cp "${3:-$2}.png" "output/${3:-$2}_ref.png"
+
             if [[ $IDIFF_RESULT -ne 4 ]]; then
                 # Drop the alpha channel
                 oiiotool $TMP_DIFF_FILE --no-autopremult -ch R,G,B -o output/$DIFF_FILE_NAME
