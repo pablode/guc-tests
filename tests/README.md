@@ -1074,9 +1074,7 @@ Feature Tests
 
 Minor observations:
 * **Brightness differences**  
-Most notably in the glTF-Asset-Generator tests. Between UsdPreviewSurface and the glTF PBR, the specular response may be the cause (see MetalRoughSpheresNoTextures). Differences between MaterialX and the glTF reference renders may be caused by their lighting setups.
-* **Shadowing differences**  
-For instance, in the AlphaBlendModeTest. These can be attributed to the different handling of shadows in HdStorm's MaterialX integration.
+Between the UsdPreviewSurface and glTF PBR shading models, the specular response is most likely the cause (see MetalRoughSpheresNoTextures).
 * **Missing transmission color attenuation**  
 For instance, in the TransmissionTest sample model. This seems to be a current limitation of HdStorm's MaterialX integration.
 * **TextureSettingsTest seems to fail**  
