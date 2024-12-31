@@ -7,14 +7,18 @@
 
 def Xform "Lights" (
     variants = {
-        string domeLightVariant = "none"
+        string domeLightVariant = "studio"
     }
     prepend variantSets = "domeLightVariant"
 )
 {
     variantSet "domeLightVariant" = {
-        "none" {
-            # Use default lighting.
+        "studio" {
+            def DomeLight "DomeLight"
+            {
+                asset inputs:texture:file = @./_cyclorama.hdr@
+                float inputs:intensity = 0.5
+            }
         }
         "glTFAssetGenerator" {
             def DomeLight "DomeLight"
