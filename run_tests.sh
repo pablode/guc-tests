@@ -223,6 +223,28 @@ test_sampleModel()
     test_graphical $1 $GLTF_INPUT_FILE $USD_OUTPUT_FILE
 }
 
+# $1: model base name (e.g. 'ToyCar')
+test_sampleModelDraco()
+{
+    TEST_NAME=Draco_$1
+
+    if skip_or_print_test $TEST_NAME; then return; fi
+
+    USD_OUTPUT_DIR=output/$TEST_NAME
+    USD_OUTPUT_FILE=$USD_OUTPUT_DIR/$TEST_NAME.usd
+    GLTF_INPUT_FILE=input/glTF-Sample-Models/2.0/$1/glTF-Draco/$1.gltf
+
+    convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
+
+    if [ $? -ne 0 ]; then
+        print_error
+        return
+    elif [ ${GT_DISABLE_GRAPHICAL:-0} -eq 0 ] && [ ${GT_DISABLE_GRAPHICAL_PREVIEW:-0} -eq 0 ]; then
+        # can't use non-Draco ref because of numerical differences
+        render_and_compare $TEST_NAME "${TEST_NAME}_preview"
+    fi
+}
+
 # $1: category
 # $2: test index (string, two digits)
 test_generatorAsset()
@@ -633,6 +655,24 @@ test_sampleModel "TwoSidedPlane"                  0
 #test_sampleModel "Unicode❤♻Test"                 GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "UnlitTest"                      GT_SAMPLE_MODEL_FLAG_BINARY
 test_sampleModel "VertexColorTest"                GT_SAMPLE_MODEL_FLAG_BINARY_AND_EMBEDDED
+
+###
+### Draco Models
+###
+test_sampleModelDraco "2CylinderEngine"
+# Disabled: single test is enough for now
+#test_sampleModelDraco "Avocado"
+#test_sampleModelDraco "BarramundiFish"
+#test_sampleModelDraco "BoomBox"
+#test_sampleModelDraco "BrainStem"
+#test_sampleModelDraco "CesiumMan"
+#test_sampleModelDraco "CesiumMilkTruck"
+#test_sampleModelDraco "Corset"
+#test_sampleModelDraco "GearboxAssy"
+#test_sampleModelDraco "Lantern"
+#test_sampleModelDraco "ReciprocatingSaw"
+#test_sampleModelDraco "VC"
+#test_sampleModelDraco "WaterBottle"
 
 ##
 ## Graphical: third party

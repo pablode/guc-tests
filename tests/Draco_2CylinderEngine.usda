@@ -1,0 +1,35 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/Draco_2CylinderEngine/Draco_2CylinderEngine.usd@
+)
+{
+}
+
+def Xform "T_Lights" (
+    prepend references = @./_lights.usda@
+    variants = {
+        string domeLightVariant = "secludedBeach"
+    }
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    float2 clippingRange = (500, 1500)
+    float focalLength = 38.396854
+    float horizontalAperture = 45
+    token projection = "perspective"
+    float verticalAperture = 24
+    float3 xformOp:rotateXYZ:a = (-90, -0, 0)
+    float3 xformOp:rotateXYZ:b = (83.09159, -0.19831568, -161.90738)
+    double3 xformOp:translate = (-287.7701110839844, 739.7190551757812, 45.369651794433594)
+    uniform token[] xformOpOrder = ["xformOp:rotateXYZ:a", "xformOp:translate", "xformOp:rotateXYZ:b"]
+}
+
