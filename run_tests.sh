@@ -797,14 +797,6 @@ if ! skip_or_print_test "MaterialVariants"; then
                                    "--default-material-variant 1"
 fi
 
-# GeompropVis
-# Disabled due to Storm shader compilation error on v24.05
-#if ! skip_or_print_test "GeompropVis"; then
-#    if [ ${GT_DISABLE_GRAPHICAL:-0} -eq 0 ] && [ ${GT_DISABLE_GRAPHICAL_MTLX:-0} -eq 0 ]; then
-#        IMAGE_WIDTH=800 render_and_compare "GeompropVis" "GeompropVis_mtlx"
-#    fi
-#fi
-
 # Scenes
 # $1: test name
 function test_scene()
