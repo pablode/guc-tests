@@ -796,11 +796,19 @@ if ! skip_or_print_test "UsdaDiff_Below2411"; then
         print_error
     fi
 fi
-if ! skip_or_print_test "UsdaDiff_EqualAbove2411"; then
-    USD_OUTPUT_FILE="output/UsdaDiff_EqualAbove2411.usda"
+if ! skip_or_print_test "UsdaDiff_Equal2411"; then
+    USD_OUTPUT_FILE="output/UsdaDiff_Equal2411.usda"
     convert_glTF_to_USD "input/glTF-Asset-Generator/Output/Positive/Material_MetallicRoughness/Material_MetallicRoughness_11.gltf" $USD_OUTPUT_FILE -m -u
 
-    if [ $? -ne 0 ] || ! diff --text -w "$USD_OUTPUT_FILE" "UsdaDiff_EqualAbove2411.usda"; then
+    if [ $? -ne 0 ] || ! diff --text -w "$USD_OUTPUT_FILE" "UsdaDiff_Equal2411.usda"; then
+        print_error
+    fi
+fi
+if ! skip_or_print_test "UsdaDiff_Above2411"; then
+    USD_OUTPUT_FILE="output/UsdaDiff_Above2411.usda"
+    convert_glTF_to_USD "input/glTF-Asset-Generator/Output/Positive/Material_MetallicRoughness/Material_MetallicRoughness_11.gltf" $USD_OUTPUT_FILE -m -u
+
+    if [ $? -ne 0 ] || ! diff --text -w "$USD_OUTPUT_FILE" "UsdaDiff_Above2411.usda"; then
         print_error
     fi
 fi
