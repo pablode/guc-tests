@@ -6,7 +6,7 @@ For test-specific information, please see the [Graphical Test Overview](tests).
 
 ## Local setup
 
-1. Build and install [USD v24.05](https://github.com/PixarAnimationStudios/USD/tree/v24.05) with [this patch](https://github.com/PixarAnimationStudios/OpenUSD/pull/3045) and following flags:  
+1. Build and install [USD v24.05](https://github.com/PixarAnimationStudios/USD/tree/v24.05) with following flags:  
 `--materialx --openimageio --opencolorio --build-args OpenImageIO,"-DOIIO_BUILD_TOOLS=ON"`
 2. Build guc in **Debug** configuration with the Sdf plugin enabled, add the `<build>/bin` folder to your PATH
 3. Execute `bash run_tests.sh`
