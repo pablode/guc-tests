@@ -1085,3 +1085,5 @@ Failures:
 This hints at an actual issue in either 1) guc's handling of normal maps, 2) the MaterialX glTF PBR implementation, 3) MaterialXGenGlsl or 4) HdStorm.
 * **ToyCar model cloth is too bright and has shading artifacts**  
 The artifacts exist in MaterialXView too, suggesting an issue with the GLSL sheen implementation, or the MaterialX glTF PBR.
+* **Storm handles greyscale images incorrectly**  
+This can f.i. be seen in TextureLinearInterpolationTest. Logged as MaterialX issue [#2257](https://github.com/AcademySoftwareFoundation/MaterialX/issues/2257).
