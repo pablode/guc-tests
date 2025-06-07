@@ -1079,6 +1079,8 @@ Between the UsdPreviewSurface and glTF PBR shading models, the specular response
 For instance, in the TransmissionTest sample model. This seems to be a current limitation of HdStorm's MaterialX integration.
 * **TextureSettingsTest seems to fail**  
 It's actually working, but backface culling is disabled by default.
+* **Environment map artifacts**  
+These were introduced with USD v25.05 and are logged [here](https://github.com/PixarAnimationStudios/OpenUSD/issues/3670).
 
 Failures:
 * **Material\_04 looks more specular than it should**  
