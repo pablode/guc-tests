@@ -103,8 +103,11 @@ def Xform "Asset" (
         {
             def "Materials"
             {
-                def Material "mat"
+                def Material "mat" (
+                    prepend apiSchemas = ["MaterialXConfigAPI"]
+                )
                 {
+                    string config:mtlx:version = "1.39"
                     float inputs:alpha
                     float inputs:alpha_cutoff
                     int inputs:alpha_mode
@@ -131,10 +134,10 @@ def Xform "Asset" (
                     float3 inputs:tangent
                     float inputs:thickness
                     float inputs:transmission
-                    token outputs:mtlx:surface.connect = </Asset/Materials/MaterialX/Materials/mat/ND_gltf_pbr_surfaceshader.outputs:surface>
+                    token outputs:mtlx:surface.connect = </Asset/Materials/MaterialX/Materials/mat/SR_mat.outputs:surface>
 
-                    def Shader "ND_gltf_pbr_surfaceshader" (
-                        prepend references = </Asset/Materials/MaterialX/Shaders/ND_gltf_pbr_surfaceshader>
+                    def Shader "SR_mat" (
+                        prepend references = </Asset/Materials/MaterialX/Shaders/SR_mat>
                     )
                     {
                         float inputs:alpha.connect = </Asset/Materials/MaterialX/Materials/mat.inputs:alpha>
@@ -175,7 +178,7 @@ def Xform "Asset" (
 
             def "Shaders"
             {
-                def Shader "ND_gltf_pbr_surfaceshader"
+                def Shader "SR_mat"
                 {
                     uniform token info:id = "ND_gltf_pbr_surfaceshader"
                     token outputs:surface
