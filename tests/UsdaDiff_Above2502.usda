@@ -163,7 +163,7 @@ def Xform "Asset" (
                         float inputs:sheen_roughness.connect = </Asset/Materials/MaterialX/Materials/mat.inputs:sheen_roughness>
                         float inputs:specular.connect = </Asset/Materials/MaterialX/Materials/mat.inputs:specular>
                         color3f inputs:specular_color.connect = </Asset/Materials/MaterialX/Materials/mat.inputs:specular_color>
-                        float3 inputs:tangent.connect = </Asset/Materials/MaterialX/Materials/mat/NG_mat.outputs:out_node17>
+                        float3 inputs:tangent.connect = </Asset/Materials/MaterialX/Materials/mat.inputs:tangent>
                         float inputs:thickness.connect = </Asset/Materials/MaterialX/Materials/mat.inputs:thickness>
                         float inputs:transmission.connect = </Asset/Materials/MaterialX/Materials/mat.inputs:transmission>
                     }
@@ -192,7 +192,6 @@ def Xform "Asset" (
                     color3f outputs:out_node6.connect = </Asset/Materials/MaterialX/NodeGraphs/NG_mat/node6.outputs:out>
                     float outputs:out_node10.connect = </Asset/Materials/MaterialX/NodeGraphs/NG_mat/node10.outputs:out>
                     float outputs:out_node14.connect = </Asset/Materials/MaterialX/NodeGraphs/NG_mat/node14.outputs:out>
-                    float3 outputs:out_node17.connect = </Asset/Materials/MaterialX/NodeGraphs/NG_mat/node17.outputs:out>
 
                     def Shader "node1"
                     {
@@ -315,29 +314,6 @@ def Xform "Asset" (
                         float inputs:in1.connect = </Asset/Materials/MaterialX/NodeGraphs/NG_mat/node13.outputs:out>
                         float inputs:in2 = 0
                         float outputs:out
-                    }
-
-                    def Shader "node15"
-                    {
-                        uniform token info:id = "ND_geompropvalue_vector3"
-                        string inputs:geomprop = "tangents"
-                        float3 outputs:out
-                    }
-
-                    def Shader "node16"
-                    {
-                        uniform token info:id = "ND_transformvector_vector3"
-                        string inputs:fromspace = "object"
-                        float3 inputs:in.connect = </Asset/Materials/MaterialX/NodeGraphs/NG_mat/node15.outputs:out>
-                        string inputs:tospace = "world"
-                        float3 outputs:out
-                    }
-
-                    def Shader "node17"
-                    {
-                        uniform token info:id = "ND_normalize_vector3"
-                        float3 inputs:in.connect = </Asset/Materials/MaterialX/NodeGraphs/NG_mat/node16.outputs:out>
-                        float3 outputs:out
                     }
                 }
             }
