@@ -6,7 +6,7 @@ For test-specific information, please see the [Graphical Test Overview](tests).
 
 ## Local setup
 
-1. Build and install [USD v25.08](https://github.com/PixarAnimationStudios/USD/tree/v25.08) with following flags:  
+1. Build and install [USD v26.03](https://github.com/PixarAnimationStudios/USD/tree/v26.03) with following flags:  
 `--materialx --openimageio --opencolorio --build-args OpenImageIO,"-DOIIO_BUILD_TOOLS=ON"`
 2. Build guc in **Debug** configuration with the Sdf plugin enabled, add the `<build>/bin` folder to your PATH
 3. Execute `bash run_tests.sh`
@@ -32,6 +32,7 @@ GT_DISABLE_CONVERSION | Disable glTF to USD conversion. This option reduces test
 GT_DISABLE_GRAPHICAL | Disable all graphical tests
 GT_DISABLE_GRAPHICAL_MTLX | Disable MaterialX graphical tests
 GT_DISABLE_GRAPHICAL_PREVIEW | Disable UsdPreviewSurface graphical tests
+GT_DISABLE_MTLX | Disable MaterialX generation and testing
 GT_VERBOSE | Print all executed commands
 
 ## Continuous integration
