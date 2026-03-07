@@ -124,14 +124,6 @@ convert_glTF_to_USD()
     return 0
 }
 
-# $1: glTF input file path
-# $2: usd output file path
-# $3+: (opt.) additional conversion flags
-convert_glTF_to_hdSt_USD()
-{
-    convert_glTF_to_USD $1 $2 --emit-mtlx ${@:3}
-}
-
 # $1: test base name
 # $2: glTF input file path
 # $3: usd output file path
@@ -139,19 +131,21 @@ convert_glTF_to_hdSt_USD()
 # $5+: (opt.) additional conversion flags
 test_graphical()
 {
-    # Unfortunately, there is no way to make HdStorm prefer a MaterialX material binding over a preview material
-    # binding. As a workaround, we use a backdoor environment variable to not emit preview material bindings in
-    # the conversion process.
-    GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 convert_glTF_to_hdSt_USD $2 $3 ${@:5}
+    if [ ${GT_DISABLE_MTLX:-0} -eq 0 ]; then
+        # Unfortunately, there is no way to make HdStorm prefer a MaterialX material binding over a preview material
+        # binding. As a workaround, we use a backdoor environment variable to not emit preview material bindings in
+        # the conversion process.
+        GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 convert_glTF_to_USD $2 $3 --emit-mtlx ${@:5}
 
-    if [ $? -ne 0 ]; then
-        print_error
-        return
-    elif [ ${GT_DISABLE_GRAPHICAL:-0} -eq 0 ] && [ ${GT_DISABLE_GRAPHICAL_MTLX:-0} -eq 0 ]; then
-        render_and_compare $1 "$1_mtlx" "${4:-$1}_mtlx"
+        if [ $? -ne 0 ]; then
+            print_error
+            return
+        elif [ ${GT_DISABLE_GRAPHICAL:-0} -eq 0 ] && [ ${GT_DISABLE_GRAPHICAL_MTLX:-0} -eq 0 ]; then
+            render_and_compare $1 "$1_mtlx" "${4:-$1}_mtlx"
+        fi
     fi
 
-    convert_glTF_to_hdSt_USD $2 $3 ${@:5}
+    convert_glTF_to_USD $2 $3 ${@:5}
 
     if [ $? -ne 0 ]; then
         print_error
@@ -180,11 +174,13 @@ test_sampleModel()
     if (( (${2:-0} & GT_SAMPLE_MODEL_FLAG_BINARY) != 0 )); then
         GLTF_INPUT_FILE=input/glTF-Sample-Models/2.0/$1/glTF-Binary/$1.glb
 
-        GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 \
-            convert_glTF_to_hdSt_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
-        if [ $? -ne 0 ]; then print_error; fi
+        if [ ${GT_DISABLE_MTLX:-0} -eq 0 ]; then
+            GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 \
+                convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE --emit-mtlx
+            if [ $? -ne 0 ]; then print_error; fi
+        fi
 
-        convert_glTF_to_hdSt_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
+        convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
         if [ $? -ne 0 ]; then print_error; fi
 
         rm -rf $USD_OUTPUT_DIR
@@ -194,11 +190,13 @@ test_sampleModel()
     if (( (${2:-0} & GT_SAMPLE_MODEL_FLAG_EMBEDDED) != 0 )); then
         GLTF_INPUT_FILE=input/glTF-Sample-Models/2.0/$1/glTF-Embedded/$1.gltf
 
-        GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 \
-            convert_glTF_to_hdSt_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
-        if [ $? -ne 0 ]; then print_error; fi
+        if [ ${GT_DISABLE_MTLX:-0} -eq 0 ]; then
+            GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 \
+                convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE --emit-mtlx
+            if [ $? -ne 0 ]; then print_error; fi
+        fi
 
-        convert_glTF_to_hdSt_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
+        convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
         if [ $? -ne 0 ]; then print_error; fi
 
         rm -rf $USD_OUTPUT_DIR
@@ -208,11 +206,13 @@ test_sampleModel()
     if (( (${2:-0} & GT_SAMPLE_MODEL_FLAG_MESHOPT) != 0 )); then
         GLTF_INPUT_FILE=input/glTF-Sample-Models/2.0/$1/glTF-Meshopt/$1.gltf
 
-        GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 \
-            convert_glTF_to_hdSt_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
-        if [ $? -ne 0 ]; then print_error; fi
+        if [ ${GT_DISABLE_MTLX:-0} -eq 0 ]; then
+            GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 \
+                convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE --emit-mtlx
+            if [ $? -ne 0 ]; then print_error; fi
+        fi
 
-        convert_glTF_to_hdSt_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
+        convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
         if [ $? -ne 0 ]; then print_error; fi
 
         rm -rf $USD_OUTPUT_DIR
@@ -707,21 +707,23 @@ if ! skip_or_print_test "TextureEncodingTest"; then
 
     IMAGE_WIDTH=400 GT_DISABLE_GRAPHICAL_MTLX=1 test_graphical $TEST_NAME $GLTF_INPUT_FILE $USD_OUTPUT_FILE
 
-    GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE --emit-mtlx
+    if [ ${GT_DISABLE_MTLX:-0} -eq 0 ]; then
+        GUC_DISABLE_PREVIEW_MATERIAL_BINDINGS=1 convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE --emit-mtlx
 
-    # HdStorm renders the 1x1 green textures as white. Resizing them yields correct results.
-    textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_0.png"
-    textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_0_gamma.png"
-    textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_0_icc.png"
-    textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_255.png"
-    textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_255_gamma.png"
-    textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_255_icc.png"
+        # HdStorm renders the 1x1 green textures as white. Resizing them yields correct results.
+        textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_0.png"
+        textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_0_gamma.png"
+        textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_0_icc.png"
+        textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_255.png"
+        textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_255_gamma.png"
+        textureEncodingResizeImage "$USD_OUTPUT_DIR/0_136_255_icc.png"
 
-    if [ $? -ne 0 ]; then
-        print_error
-        return
-    elif [ ${GT_DISABLE_GRAPHICAL:-0} -eq 0 ] && [ ${GT_DISABLE_GRAPHICAL_MTLX:-0} -eq 0 ]; then
-        IMAGE_WIDTH=400 render_and_compare $TEST_NAME "${TEST_NAME}_mtlx"
+        if [ $? -ne 0 ]; then
+            print_error
+            return
+        elif [ ${GT_DISABLE_GRAPHICAL:-0} -eq 0 ] && [ ${GT_DISABLE_GRAPHICAL_MTLX:-0} -eq 0 ]; then
+            IMAGE_WIDTH=400 render_and_compare $TEST_NAME "${TEST_NAME}_mtlx"
+        fi
     fi
 fi
 
@@ -741,18 +743,21 @@ fi
 
 # USDZ
 if ! skip_or_print_test "Usdz_DamagedHelmet"; then
+    GT_DISABLE_MTLX=1 \
     IMAGE_WIDTH=800 test_graphical "Usdz_DamagedHelmet" \
                                    "input/glTF-Sample-Models/2.0/DamagedHelmet/glTF/DamagedHelmet.gltf" \
                                    "output/Usdz_DamagedHelmet.usdz" \
                                    "DamagedHelmet"
 fi
 if ! skip_or_print_test "Usdz_Material_MetallicRoughness_10_rel"; then
+    GT_DISABLE_MTLX=1 \
     IMAGE_WIDTH=400 test_graphical "Usdz_Material_MetallicRoughness_10_rel" \
                                    "input/glTF-Asset-Generator/Output/Positive/Material_MetallicRoughness/Material_MetallicRoughness_10.gltf" \
                                    "output/Usdz_Material_MetallicRoughness_10_rel.usdz" \
                                    "Material_MetallicRoughness_10"
 fi
 if ! skip_or_print_test "Usdz_Material_MetallicRoughness_10_abs"; then
+    GT_DISABLE_MTLX=1 \
     IMAGE_WIDTH=400 test_graphical "Usdz_Material_MetallicRoughness_10_abs" \
                                    "$PWD/input/glTF-Asset-Generator/Output/Positive/Material_MetallicRoughness/Material_MetallicRoughness_10.gltf" \
                                    "$PWD/output/Usdz_Material_MetallicRoughness_10_abs.usdz" \
@@ -845,7 +850,7 @@ GT_DISABLE_GRAPHICAL_MTLX=1 test_scene "Scene_04"
 
 # Cameras
 if ! skip_or_print_test "Cameras"; then
-    convert_glTF_to_hdSt_USD "input/glTF-Sample-Models/2.0/Cameras/glTF/Cameras.gltf" "output/Cameras.usd"
+    convert_glTF_to_USD "input/glTF-Sample-Models/2.0/Cameras/glTF/Cameras.gltf" "output/Cameras.usd"
     if [ $? -ne 0 ]; then
         print_error
     elif [ ${GT_DISABLE_GRAPHICAL:-0} -eq 0 ] && [ ${GT_DISABLE_GRAPHICAL_PREVIEW:-0} -eq 0 ]; then
