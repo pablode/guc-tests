@@ -1047,6 +1047,59 @@ Feature Tests
   </tr>
 </table>
 
+### Gaussian splats
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Render</th>
+  </tr>
+  <tr>
+    <td>Cactus</td>
+    <td><img src="GS_Cactus_preview.png" align="middle" width=400 /></td>
+  </tr>
+  <tr>
+    <td>Depths</td>
+    <td><img src="GS_Depths_preview.png" align="middle" width=400 /></td>
+  </tr>
+  <tr>
+    <td>MeshInSplats</td>
+    <td><img src="GS_MeshInSplats_preview.png" align="middle" width=400 /></td>
+  </tr>
+  <tr>
+    <td>MixedDegrees</td>
+    <td><img src="GS_MixedDegrees_preview.png" align="middle" width=400 /></td>
+  </tr>
+  <tr>
+    <td>RotationsX</td>
+    <td><img src="GS_RotationsX_preview.png" align="middle" width=400 /></td>
+  </tr>
+  <tr>
+    <td>RotationsY</td>
+    <td><img src="GS_RotationsY_preview.png" align="middle" width=400 /></td>
+  </tr>
+  <tr>
+    <td>RotationsZ</td>
+    <td><img src="GS_RotationsZ_preview.png" align="middle" width=400 /></td>
+  </tr>
+  <tr>
+    <td>ScaledScales</td>
+    <td><img src="GS_ScaledScales_preview.png" align="middle" width=400 /></td>
+  </tr>
+  <tr>
+    <td>Scales</td>
+    <td><img src="GS_Scales_preview.png" align="middle" width=400 /></td>
+  </tr>
+  <tr>
+    <td>ShGrid</td>
+    <td><img src="GS_ShGrid_preview.png" align="middle" width=400 /></td>
+  </tr>
+  <tr>
+    <td>SplatsInMesh</td>
+    <td><img src="GS_SplatsInMesh_preview.png" align="middle" width=400 /></td>
+  </tr>
+</table>
+
 ### Custom Tests
 
 <table>
