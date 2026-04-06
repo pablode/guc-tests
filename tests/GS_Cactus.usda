@@ -1,0 +1,20 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/GS_Cactus/GS_Cactus.usd@
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    double3 xformOp:translate = (0, 0.65, 5)
+    uniform token[] xformOpOrder = ["xformOp:translate"]
+    float2 clippingRange = (5.0, 10)
+    float focalLength = 27.5
+}

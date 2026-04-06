@@ -1,0 +1,20 @@
+#usda 1.0
+(
+    defaultPrim = "T_Scene"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "T_Scene" (
+    prepend references = @./output/GS_MeshInSplats/GS_MeshInSplats.usd@
+)
+{
+}
+
+def Camera "T_Camera"
+{
+    double3 xformOp:translate = (5, 5, 60)
+    uniform token[] xformOpOrder = ["xformOp:translate"]
+    float2 clippingRange = (40, 60)
+    float focalLength = 50
+}

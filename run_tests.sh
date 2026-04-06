@@ -11,6 +11,7 @@ fi
 TEST_FILTER=${1}
 FAIL_COUNT=0
 IMAGE_WIDTH=640
+RENDERER=Storm
 
 TMP_DIR=$(mktemp -d)
 mkdir -p tests/output
@@ -64,7 +65,7 @@ render_and_compare()
     else
         USDRECORD_EXECUTABLE=usdrecord
     fi
-    MSYS2_ARG_CONV_EXCL='*' $USDRECORD_EXECUTABLE --enableDomeLightVisibility --disableCameraLight --imageWidth $IMAGE_WIDTH --camera ${4:-"T_Camera"} $1.usda output/$2.png
+    MSYS2_ARG_CONV_EXCL='*' $USDRECORD_EXECUTABLE --renderer $RENDERER --enableDomeLightVisibility --disableCameraLight --imageWidth $IMAGE_WIDTH --camera ${4:-"T_Camera"} $1.usda output/$2.png
 
     if [ $? -ne 0 ]; then
         print_error
@@ -266,6 +267,26 @@ test_thirdparty()
     if skip_or_print_test $1; then return; fi
 
     test_graphical $1 "input/thirdparty/$2" "output/$1/$1.usd"
+}
+
+# $1: test name
+test_gaussianSplats()
+{
+    TEST_NAME=GS_$1
+
+    if skip_or_print_test $TEST_NAME; then return; fi
+
+    GLTF_INPUT_FILE=input/glTF-Issue-2562/$1.glb
+    USD_OUTPUT_FILE=output/$TEST_NAME/$TEST_NAME.usd
+
+    convert_glTF_to_USD $GLTF_INPUT_FILE $USD_OUTPUT_FILE
+
+    if [ $? -ne 0 ]; then
+        print_error
+        return
+    elif [ ${GT_DISABLE_GRAPHICAL:-0} -eq 0 ] && [ ${GT_DISABLE_GRAPHICAL_PREVIEW:-0} -eq 0 ]; then
+        RENDERER=hdParticleField render_and_compare $TEST_NAME "${TEST_NAME}_preview"
+    fi
 }
 
 #
@@ -686,6 +707,24 @@ test_thirdparty "Fangyi" "fangyi.glb"
 test_thirdparty "Loewe_von_Asparn" "loewe_von_asparn.glb"
 test_thirdparty "Perseverance" "Perseverance.glb"
 test_thirdparty "Space_Shuttle" "Space_Shuttle.glb"
+
+##
+## Graphical: Gaussian splats
+##
+
+IMAGE_WIDTH=800
+test_gaussianSplats "Cactus"
+test_gaussianSplats "Depths"
+test_gaussianSplats "MeshInSplats"
+test_gaussianSplats "MixedDegrees"
+test_gaussianSplats "RotationsX"
+test_gaussianSplats "RotationsY"
+test_gaussianSplats "RotationsZ"
+# Note: flaky renders
+GT_DISABLE_GRAPHICAL=1 test_gaussianSplats "ScaledScales"
+test_gaussianSplats "Scales"
+test_gaussianSplats "ShGrid"
+test_gaussianSplats "SplatsInMesh"
 
 #
 # Custom Tests
