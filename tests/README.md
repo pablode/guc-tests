@@ -1081,9 +1081,7 @@ For instance, in the TransmissionTest sample model. This seems to be a current l
 It's actually working, but backface culling is disabled by default.
 
 Failures:
-* **Material\_04 looks more specular than it should**  
-This hints at an actual issue in either 1) guc's handling of normal maps, 2) the MaterialX glTF PBR implementation, 3) MaterialXGenGlsl or 4) HdStorm.
-* **ToyCar model cloth is too bright and has shading artifacts**  
-The artifacts exist in MaterialXView too, suggesting an issue with the GLSL sheen implementation, or the MaterialX glTF PBR.
+* **Material\_04 difference and ToyCar sheen artifacts**  
+These seem to be caused by normal flipping in MateriaX's rendering logic which has been logged as [issue #2852](https://github.com/AcademySoftwareFoundation/MaterialX/issues/2852).
 * **Storm handles greyscale images incorrectly**  
 This can f.i. be seen in TextureLinearInterpolationTest. Logged as MaterialX issue [#2257](https://github.com/AcademySoftwareFoundation/MaterialX/issues/2257).
