@@ -343,10 +343,12 @@ def Xform "Asset" (
                             interpolation = "uniform"
                         )
                         point3f[] points = [(0.5, -0.5, 0), (-0.5, -0.5, 0), (-0.5, 0.5, 0), (0.5, 0.5, 0)]
-                        float3[] primvars:color = [(0, 0, 1), (1, 0, 0), (0, 0, 1), (1, 0, 0)] (
+                        color3f[] primvars:color = [(0, 0, 1), (1, 0, 0), (0, 0, 1), (1, 0, 0)] (
+                            colorSpace = "lin_rec709_scene"
                             interpolation = "vertex"
                         )
                         color3f[] primvars:displayColor = [(0, 0, 0.2), (0.2, 0, 0), (0, 0, 0.2), (0.2, 0, 0)] (
+                            colorSpace = "lin_rec709_scene"
                             interpolation = "vertex"
                         )
                         texCoord2f[] primvars:st = [(1, 0), (0, 0), (0, 1), (1, 1)] (
