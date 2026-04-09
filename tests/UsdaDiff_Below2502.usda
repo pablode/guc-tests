@@ -325,7 +325,7 @@ def Xform "Asset" (
             {
                 def Xform "mesh"
                 {
-                    def Mesh "submesh" (
+                    def Mesh "primitive" (
                         prepend apiSchemas = ["MaterialBindingAPI"]
                     )
                     {
